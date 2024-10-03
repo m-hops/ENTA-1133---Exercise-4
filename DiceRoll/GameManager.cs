@@ -1,180 +1,209 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Media;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab2
+namespace Assignment1
 {
     internal class GameManager
     {
-        public string playerName = "";
-        public string shipName = "";
-        public string playerInput = "";
-        public string weaponUsed = "";
+      
+        DieRoller dice = new DieRoller();
+        Dialog dialog = new Dialog();
+        Player player0 = new Player();
+        Player player1 = new Player();
+        Ship ship0;
+        Ship ship1;
+        bool isGameRunning = false;
+        bool isShip0Alive = false;
+        int roundCounter = 0;
 
-        public int pScore;
-        public int cScore;
+        readonly string[] kShipPresetTypes = new string[]
+        {
+            "01",
+            "02",
+            "03"
+        };
 
-        DieRoller roll = new DieRoller();
+        readonly string[][] kShipPresetWeaponNames = new string[][]
+        {
+            new string[] {"Laser", "Missle", "Torpedo", "Nuke"},
+            new string[] {"Missle", "Missle", "Torpedo", "Torpedo"},
+            new string[] {"Laser", "Laser", "Nuke", "Nuke"}
+        };
+
+        readonly int[][] kShipPresetWeaponAttacks = new int[][]
+        {
+            new int[] {6, 10, 12, 20},
+            new int[] {10, 10, 12, 12},
+            new int[] {6, 6, 20, 20}
+        };
 
         public void GameLoop()
         {
-            Setup();
-            Combat();
+            dialog.Welcome();
+            dialog.Rules();
+            Identification();
+            GameStartConfirm();
+
+            while (isGameRunning) 
+            {
+                CombatRound();
+
+                roundCounter++;
+                if (roundCounter % Ship.kWeaponCount == 0)
+                {
+                    ship0.ResetWeapons();
+                    ship1.ResetWeapons();
+                    Console.WriteLine("Weapons have been reset.");
+                }
+            }
+
+            GameSummary();
             End();
         }
 
-        public void Setup()
+        public void Identification()
         {
-            Console.WriteLine("-------------------");
-            Console.WriteLine("|SLOWER THAN LIGHT|");
-            Console.WriteLine("-------------------");
-            Console.WriteLine("");
-            Console.WriteLine("What is your name?");
+            dialog.IDPlayer();
+            player0.pName = Console.ReadLine();
 
-            playerName = Console.ReadLine();
+            dialog.IDShipName();
+            string shipName = Console.ReadLine();
 
-            Console.WriteLine("");
-            Console.WriteLine("And what is the name of your ship, " + playerName + "?");
+            dialog.IDShipType();
+            bool isInvalidInput;
+            do
+            {
+                isInvalidInput = false;
+                switch (Console.ReadLine())
+                {
+                    case "01":
+                        ship0 = CreateShip(0, shipName);
+                        ship1 = CreateShip(dice.Roll(3) - 1, "ISS Bad Ship");
+                        break;
+                    case "02":
+                        ship0 = CreateShip(1, shipName);
+                        ship1 = CreateShip(dice.Roll(3) - 1, "ISS Marie Antoinette");
+                        break;
+                    case "03":
+                        ship0 = CreateShip(2, shipName);
+                        ship1 = CreateShip(dice.Roll(3) - 1, "ISS Fallout");
+                        break;
+                    default:
+                        dialog.SelectionError();
+                        isInvalidInput = true;
+                        break;
 
-            shipName = Console.ReadLine();
+                }
+            } while (isInvalidInput);
+           
 
-            Console.WriteLine("");
-            Console.WriteLine("Welcome " + playerName + ", captain of the " + shipName + ".");
-            Console.WriteLine("");
-            Console.WriteLine("Press any key to continue...");
-
-            Console.ReadLine();
-            Console.Clear();
         }
 
-        public void Combat()
+        public void GameStartConfirm()
         {
-            Console.WriteLine("");
-            Console.WriteLine("While out on a scouting mission, Captain " + playerName + " recieves a transmission from a nearby ship.");
-            Console.WriteLine("");
-            Console.WriteLine("'Attention captain of the " + shipName + "! Prepared to be fired upon because I think you suck.'");
-            Console.WriteLine("");
-            Console.WriteLine("What weapon will you choose to fire?");
-            Console.WriteLine("");
-            Console.WriteLine("---------------------------------------------------------");
-            Console.WriteLine("D6 - Laser // D10 - Missle // D12 - Torpedo // D20 - Nuke");
-            Console.WriteLine("");
+            isGameRunning = true;
+        }
 
-            playerInput = Console.ReadLine().ToLower();
+        public void CombatRound()
+        {
+            Console.WriteLine("Current Weapons Online: ");
 
-            if (playerInput == "d6" || playerInput == "6" || playerInput == "laser")
+            for (int i = 0; i < ship0.weaponsReady.Count; i++) 
             {
-                weaponUsed = "laser";
-
-                pScore = roll.Roll(6);
-                cScore = roll.Roll(6);
-
-                Console.WriteLine("");
-                Console.WriteLine("You fire your ships " + weaponUsed + " for " + pScore + " damage");
-                Console.WriteLine("The enemy ship also fires its " + weaponUsed + " at you for " + cScore + " damage");
-                Console.WriteLine("");
-
-            } else if (playerInput == "d10" || playerInput == "10" || playerInput == "missle")
-            {
-                weaponUsed = "missle";
-
-                pScore = roll.Roll(10);
-                cScore = roll.Roll(10);
-
-                Console.WriteLine("");
-                Console.WriteLine("You fire your ships " + weaponUsed + " for " + pScore + " damage");
-                Console.WriteLine("The enemy ship also fires its " + weaponUsed + " at you for " + cScore + " damage");
-                Console.WriteLine("");
-
-            } else if (playerInput == "d12" || playerInput == "12" || playerInput == "torpedo")
-            {
-                weaponUsed = "torpedo";
-
-                pScore = roll.Roll(12);
-                cScore = roll.Roll(12);
-
-                Console.WriteLine("");
-                Console.WriteLine("You fire your ships " + weaponUsed + " for " + pScore + " damage.");
-                Console.WriteLine("The enemy ship also fires its " + weaponUsed + " at you for " + cScore + " damage.");
-                Console.WriteLine("");
-
-            } else if (playerInput == "d20" || playerInput == "20" || playerInput == "nuke")
-            {
-                weaponUsed = "nuke";
-
-                pScore = roll.Roll(20);
-                cScore = roll.Roll(20);
-
-                Console.WriteLine("");
-                Console.WriteLine("You fire your ships " + weaponUsed + " for " + pScore + " damage.");
-                Console.WriteLine("The enemy ship also fires its " + weaponUsed + " at you for " + cScore + " damage.");
-                Console.WriteLine("");
-
-            } else
-            {
-
-                pScore = roll.Roll(0);
-                cScore = roll.Roll(20);
-
-                Console.WriteLine("");
-                Console.WriteLine("The " + shipName + "s computer informs you your weapons systems have locked up.");
-                Console.WriteLine("Unfortunately, your opponents systems seem to work just fine");
+                int weaponIndex = ship0.weaponsReady[i];
+                Console.WriteLine(ship0.weaponNames[weaponIndex]);
             }
 
+            dialog.SelectWeapon();
+
+            int ship0WeaponIndex = -1;
+
+            while (ship0WeaponIndex < 0)
+            {
+                string ship0WeaponSelection = Console.ReadLine();
+                ship0WeaponIndex = ship0.GetWeapon(ship0WeaponSelection);
+                
+                if (ship0WeaponIndex < 0)
+                {
+                    dialog.SelectionError();
+                }
+            }
+
+            int ship1WeaponIndex = ship1.GetRandomWeapon(dice);
+            int ship0Dice = ship0.weaponAttacks[ship0WeaponIndex];
+            int ship1Dice = ship1.weaponAttacks[ship1WeaponIndex];
+            int ship0RollResult = dice.Roll(ship0Dice);
+            int ship1RollResult = dice.Roll(ship1Dice);
+
+            Console.WriteLine("Ship0 rolled a " + ship0RollResult);
+            Console.WriteLine("Ship1 rolled a " + ship1RollResult);
+
+            if (ship0RollResult > ship1RollResult)
+            {
+                int dmg = ship0RollResult - ship1RollResult;
+                ship1.shipHealth -= dmg;
+                Console.WriteLine("Damage to enemy is: " + dmg + ".");
+
+            } 
+            else if (ship0RollResult < ship1RollResult)
+            {
+                int dmg = ship1RollResult - ship0RollResult;
+                ship0.shipHealth -= dmg;
+                Console.WriteLine("Damage to player is: " + dmg + ".");
+
+            }
+            else 
+            {
+                Console.WriteLine("Weapons cancel each other out.");
+
+            }
+
+            Console.WriteLine("Ship 0 is now at " + ship0.shipHealth + ".");
+            Console.WriteLine("Ship 1 is now at " + ship1.shipHealth + ".");
+
+            Console.ReadLine();
+
+            if (ship0.shipHealth <= 0)
+            {
+                isGameRunning = false;
+            }
+            
+            if (ship1.shipHealth <= 0)
+            {
+                isGameRunning = false;
+            } 
+
+
+        }
+
+        public void GameSummary()
+        {
 
         }
 
         public void End()
         {
-            if (pScore > cScore)
-            {
-                Console.WriteLine("You dodge the attack, but your opponent isn't so lucky as they're blasted into space dust.");
-                Console.WriteLine("");
-                Console.WriteLine("You win!");
 
-            } else if (pScore < cScore)
-            {
-                Console.WriteLine("Your enemy dodges you attack, but you aren't so fast as you're blasted into space dust.");
-                Console.WriteLine("");
-                Console.WriteLine("You lose!");
-
-            } else
-            {
-                Console.WriteLine("Both " + weaponUsed + "s collide mid air, cancelling each other out.");
-                Console.WriteLine("This is awkward for the both of you.");
-                Console.WriteLine("");
-                Console.WriteLine("It's a tie!");
-            }
-
-            Console.WriteLine("");
-            Console.WriteLine("Would you like to play again?[y/n]");
-            Console.WriteLine("");
-
-            playerInput = Console.ReadLine().ToLower(); 
-
-            if (playerInput == "y" || playerInput == "yes") {
-
-                Console.Clear();
-                DefaultVal();
-                GameLoop();
-
-            }
-            else {
-            }
         }
-        
-        public void DefaultVal()
-        {
-            playerName = "";
-            shipName = "";
-            playerInput = "";
-            weaponUsed = "";
 
-            pScore = 0;
-            cScore = 0;
-    }
-    }
+        public Ship CreateShip(int presetIndex, string name)
+        {
+            Ship ship = new Ship(name, kShipPresetTypes[presetIndex], 100);
+
+            for (int i = 0; i < Ship.kWeaponCount; i++)
+            {
+                ship.SetWeapon(kShipPresetWeaponNames[presetIndex][i], kShipPresetWeaponAttacks[presetIndex][i], i);
+            }
+
+            return ship;
+        }
+
+
+    } 
 }

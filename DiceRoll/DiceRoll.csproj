@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DieRoller.cs" />
+	<Compile Include="Dialog.cs" />
+	<Compile Include="Player.cs" />
+	<Compile Include="Ship.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

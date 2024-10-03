@@ -4,15 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab2
+namespace Assignment1
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-
-            GameManager manager = new GameManager();
-            manager.GameLoop();
+            try
+            {
+                //JUST LAUNCHES GAME MANAGER//
+                GameManager manager = new GameManager();
+                manager.GameLoop();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.ReadLine();
+            }
         }
     }
 }
