@@ -32,7 +32,6 @@ namespace Assignment1
         public void IDShipName(string playerName)
         {
             Console.WriteLine("And what is the name of your ship, " + playerName + "?");
-            Console.WriteLine("What is your ship name?");
         }
 
         public void IDShipType(string playerName, string shipName)
