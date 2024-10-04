@@ -7,24 +7,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DiceRoll\\GameManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DiceRoll\\Ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DiceRoll\\Player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\DieRoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DiceRoll\\DieRoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Dialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DiceRoll\\Dialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DiceRoll\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DiceRoll\\Ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,33 +21,39 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 228,
-          "SelectedChildIndex": 2,
+          "DockedWidth": 199,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Dialog.cs",
               "DocumentMoniker": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Dialog.cs",
               "RelativeDocumentMoniker": "DiceRoll\\Dialog.cs",
               "ToolTip": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Dialog.cs",
               "RelativeToolTip": "DiceRoll\\Dialog.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAC0AAAAUAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE8AAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-03T03:33:11.17Z",
               "EditorCaption": ""
-            },
+            }
+          ]
+        },
+        {
+          "DockedWidth": 220,
+          "SelectedChildIndex": 1,
+          "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Program.cs",
-              "RelativeDocumentMoniker": "DiceRoll\\Program.cs",
-              "ToolTip": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Program.cs",
-              "RelativeToolTip": "DiceRoll\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAjAAAA",
+              "DocumentIndex": 2,
+              "Title": "Ship.cs",
+              "DocumentMoniker": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Ship.cs",
+              "RelativeDocumentMoniker": "DiceRoll\\Ship.cs",
+              "ToolTip": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Ship.cs",
+              "RelativeToolTip": "DiceRoll\\Ship.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T22:13:45.287Z",
+              "WhenOpened": "2024-10-04T04:24:47.238Z",
               "EditorCaption": ""
             },
             {
@@ -70,54 +64,9 @@
               "RelativeDocumentMoniker": "DiceRoll\\GameManager.cs",
               "ToolTip": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\GameManager.cs",
               "RelativeToolTip": "DiceRoll\\GameManager.cs",
-              "ViewState": "AQIAAE4AAAAAAAAAAAAAAHcAAAA/AAAA",
+              "ViewState": "AQIAAJwAAAAAAAAAAAAAAL4AAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T22:13:44.191Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DieRoller.cs",
-              "DocumentMoniker": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\DieRoller.cs",
-              "RelativeDocumentMoniker": "DiceRoll\\DieRoller.cs",
-              "ToolTip": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\DieRoller.cs",
-              "RelativeToolTip": "DiceRoll\\DieRoller.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T22:13:43.574Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 170,
-          "SelectedChildIndex": 1,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Player.cs",
-              "DocumentMoniker": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Player.cs",
-              "RelativeDocumentMoniker": "DiceRoll\\Player.cs",
-              "ToolTip": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Player.cs",
-              "RelativeToolTip": "DiceRoll\\Player.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T22:13:44.68Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Ship.cs",
-              "DocumentMoniker": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Ship.cs",
-              "RelativeDocumentMoniker": "DiceRoll\\Ship.cs",
-              "ToolTip": "C:\\Users\\s2433016\\Documents\\GitHub\\ENTA-1133---Exercise-4\\DiceRoll\\Ship.cs",
-              "RelativeToolTip": "DiceRoll\\Ship.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABIAAAA0AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T22:13:45.917Z",
               "EditorCaption": ""
             }
           ]

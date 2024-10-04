@@ -1,0 +1,25 @@
+SLOWER THAN LIGHT (v0.3)
+
+How to play:
+
++ Enter your name.
++ Name your ship.
++ Choose a ship type (01, 02, or 03).
++ Select one of the available weapons in your weapons pool to fire at the enemy.
++ After firing a weapon, that weapon will no longer be available to fire until the existing weapon pool is depleted.
++ The enemy will also choose a random attack to fire at you.
++ Whoever has the higher score wins the round and the difference between the two scores is applied as damage to the losing ship.
++ Once a ship hits 0HP, it is destroyed and the other player wins.
+
+Weapon Types & Damage Range
+
+Laser - (1-6)
+Missle - (1-10)
+Torpedo - (1-12)
+Nuke - (1-20)
+
+Ship Types & Loadouts
+
+01 - (Laser//Missle//Torpedo//Nuke)
+02 - (Missle//Missle//Torpedo//Torpedo)
+03 - (Laser//Laser//Nuke//Nuke)
