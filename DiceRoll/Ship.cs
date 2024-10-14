@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 //SHIP GENERATOR//
-namespace Assignment1
+namespace Monobius
 {
     internal class Ship
     {
@@ -19,7 +19,7 @@ namespace Assignment1
         public const int kWeaponCount = 4;
         
         //ARRAY AND LISTS TO BUNDLE SHIP ATTRIBUTES//
-        public int[] weaponAttacks = new int[kWeaponCount];
+        public int[] weaponAttacks = new  int[kWeaponCount];
         public string[] weaponNames = new string[kWeaponCount];
         public List<int> weaponsReady = new List<int>();
 
@@ -40,7 +40,7 @@ namespace Assignment1
         }
 
         //CHECKS ARRAY TO SEE IF WEAPON IS AVAILABLE//
-        public int GetWeapon(string weaponName) 
+        public int GetWeaponByIndexName(string weaponName) 
         {
             for (int i = 0; i < weaponsReady.Count; i++)
             {
@@ -76,6 +76,12 @@ namespace Assignment1
                 weaponsReady.Add(i);
             }
         }
+
+        public void ReplaceWeapon()
+        {
+
+        }
+
     }
 }
 
