@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Monobius
 {
-    internal class DieRoller
+    public class DieRoller
     {
         //RANDOM NEEDS TO BE ROLLED HERE//
         //ROLLING WITHIN ROLL DOES NOT PRODUCE CONSISTENT RANDOM RESULTS//

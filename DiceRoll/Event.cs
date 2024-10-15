@@ -22,7 +22,7 @@ namespace Monobius
 
         public void Combat()
         {
-            //COMBAT SCENARIO//
+            
         }
 
         public void Treasure()

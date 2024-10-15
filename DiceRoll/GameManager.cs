@@ -45,6 +45,12 @@ namespace Monobius
             new int[] {10, 10, 12, 12},
             new int[] {6, 6, 20, 20}
         };
+        List<Weapon> AvailableWeapons = new List<Weapon>();
+
+        public void GenerateAvailableWeapons()
+        {
+            AvailableWeapons.Add(new Weapon("MEDITATE", 6));
+        }
 
         //PRIMARY GAMELOOP//
         public void GameLoop()
@@ -94,7 +100,7 @@ namespace Monobius
         //NORMAL ROUND OF COMBAT//
         public void CombatRound()
         {
-            dialog.Write("Current Weapons Online: ");
+            dialog.Write("Current ASSETS Online: ");
             dialog.Write("----------------------");
 
             //RUNS THROUGH ARRAY AND LIST TO RETURN STILL VALID WEAPONS OR QUEUE WEAPON RESET//

@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Monobius
 {
-    internal class Map
+    public class Map
     {
         int rows = 3;
         int cols = 3;
@@ -11,7 +11,7 @@ namespace Monobius
         int enemyAmount = 3;
         Room[,] rooms;
 
-        public void MapSetup()
+        public void Setup()
         {
             rooms = new Room[rows, cols];
 

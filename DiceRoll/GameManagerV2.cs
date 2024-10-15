@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+namespace Monobius
+{
+    public class GameManagerV2
+    {
+        //CLASS INSTANCE VARIABLES//
+        DieRoller Dice = new DieRoller();
+        Dialog Dialog = new Dialog();
+        Player Player = new Player();
+        Random Random = new Random();
+        Map Map = new Map();
+        Vessel PlayerVessel;
+        Vessel[] EnemyVessels;
+
+        bool IsGameRunning = false;
+        bool IsShip0Alive = false;
+        int RoundCounter = 0;
+        int EnemyLevel = 1;
+        int EnemyCount = 3;
+        string PlayerVesselCurrentWeapon;
+
+        //PRESET SHIP POOLS//
+        //FIRST 3 ARE PLAYER CHOICE & THE REST ARE ENEMY NPCS//
+        readonly string[] kVesselPresetTypes = new string[]
+        {
+            "BODY",
+            "MIND",
+            "HOLISTIC",
+            "THE TRU MAN",
+            "SIXTY ONE PIGS",
+            "DALLAS"
+        };
+        readonly string[][] kVesselPresetWeaponNames = new string[][]
+        {
+            new string[] {"INVESTIGATE", "QUESTION", "PUNCH", "HANDGUN"},
+            new string[] {"INVESTIGATE", "QUESTION", "MEDITATE", "DOWSING"},
+            new string[] {"INVESTIGATE", "INVESTIGATE", "PUNCH", "DREAM"},
+            new string[] {"ENOLA", "NATO", "POINT FOUR", "BIRTH"},
+            new string[] {"DWISEN", "AIR STRIKE", "SEED", "CMC SIXTY TWO"},
+            new string[] {"JACK", "ELM", "GNOLL", "REVENGE"}
+        };
+        readonly int[][] kVesselPresetWeaponAttacks = new int[][]
+        {
+            new int[] {5, 10, 20, 25},
+            new int[] {5, 10, 15, 35},
+            new int[] {5, 5, 20, 30},
+            new int[] {5, 10, 15, 20},
+            new int[] {10, 15, 25, 30},
+            new int[] {15, 20, 30, 35}
+        };
+
+
+        List<Weapon> AvailableWeapons = new List<Weapon>();
+
+        //FULL WEAPONS LIST AT GAME START//
+        public void GenerateAvailableWeapons()
+        {
+            AvailableWeapons.Add(new Weapon("INVESTIGATE", 5));
+            AvailableWeapons.Add(new Weapon("QUESTION", 10));
+            AvailableWeapons.Add(new Weapon("MEDITATE", 15));
+            AvailableWeapons.Add(new Weapon("PUNCH", 20));
+            AvailableWeapons.Add(new Weapon("HANDGUN", 25));
+            AvailableWeapons.Add(new Weapon("DREAM", 30));
+            AvailableWeapons.Add(new Weapon("DOWSING", 35));
+            AvailableWeapons.Add(new Weapon("XENOGLOSSY", 40));
+            AvailableWeapons.Add(new Weapon("WARRANT", 45));
+            AvailableWeapons.Add(new Weapon("INSECTOTHOPTER", 60));
+            AvailableWeapons.Add(new Weapon("INSIGHT", 70));
+            AvailableWeapons.Add(new Weapon("PROPHECY", 80));
+            AvailableWeapons.Add(new Weapon("M91", 100));
+        }
+
+        //ONE TIME SETUPS//
+        public void GameSetup()
+        {
+            Dialog.Welcome();
+            //Dialog.Rules();
+            Player.Setup();
+            EnemeyVesselSetup();
+            Dialog.GameStart();
+            Map.Setup();
+            Console.ReadLine();
+            IsGameRunning = true;
+
+            Console.Clear();
+        }
+        //CORE GAME LOOP//
+        public void GameLoop()
+        {
+            GameSetup();
+
+            //while (IsGameRunning)
+            //{
+
+            //}
+        }
+
+        //VESSEL CONSTRUCTOR//
+        public Vessel CreateVessel(string name, int hp)
+        {
+            Vessel v = new Vessel(name, hp);
+
+            //for (int i = 0; i < Vessel.kWeaponCount; i++)
+            //{
+            //    v.SetWeapon(kVesselPresetWeaponNames[presetIndex][i], kVesselPresetWeaponAttacks[presetIndex][i], i);
+            //}
+            return v;
+        }
+        //PLAYER VESSEL SELECTION//
+        public void VesselSelect()
+        {
+            Dialog.IDVesselType(Player.Name);
+            bool isInvalidInput;
+            do
+            {
+                isInvalidInput = false;
+                switch (Console.ReadLine())
+                {
+
+                    case "BODY":
+                        PlayerVessel = CreateVessel("BODY", 50);
+                        break;
+                    case "02":
+                        PlayerVessel = CreateVessel("MIND", 40);
+                        break;
+                    case "03":
+                        PlayerVessel = CreateVessel("HOLISTIC", 45);
+                        break;
+                    default:
+                        Dialog.SelectionError();
+                        isInvalidInput = true;
+                        break;
+
+                }
+                //CHECKS FOR INVALID INPUTS//
+            } while (isInvalidInput);
+
+            Console.Clear();
+        }
+        //ENEMY VESSEL CONSTRUCTOR//
+        public void EnemeyVesselSetup()
+        {
+            EnemyVessels = new Vessel[EnemyCount];
+            EnemyVessels[0] = CreateVessel("THE TRU MAN", 30);
+            EnemyVessels[1] = CreateVessel("61 PIGS", 40);
+            EnemyVessels[2] = CreateVessel("DALLAS", 50);
+
+        }
+    }
+}
+

@@ -52,7 +52,8 @@
     <Compile Include="Player.cs" />
 	<Compile Include="Item.cs" />
     <Compile Include="Ship.cs" />
-    <Compile Include="GameManager.cs" />
+	<Compile Include="Vessel.cs" />
+	<Compile Include="GameManagerV2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

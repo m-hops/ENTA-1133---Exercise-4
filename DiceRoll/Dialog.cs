@@ -19,7 +19,7 @@ namespace Monobius
         //TAKE INPUT FROM CONSOLE.READLINE WITH FILTERING//
         public string Read()
         {
-            string txt = Console.ReadLine().ToLower();
+            string txt = Console.ReadLine().ToUpper();
 
             while (true)
             {
@@ -27,12 +27,12 @@ namespace Monobius
                 //RETURNS USER INPUT IF IT DOESNT MEET SPECIAL CONDITIONS//
                 switch (txt)
                 {
-                    case "help":
-                    case "h":
+                    case "HELP":
+                    case "H":
                         Rules();
                         break;
-                    case "inventory":
-                    case "i":
+                    case "INVENTORY":
+                    case "I":
                         Write("Inventory");
                         break;
                     case "":
@@ -51,7 +51,7 @@ namespace Monobius
         public void Welcome()
         {
             Write("-------------------");
-            Write("SLOWER THAN LIGHT");
+            Write("MONOBIUS");
             Write("-------------------");
             Write("");
             Write("Enter any key to display instructions and continue...");
@@ -65,26 +65,15 @@ namespace Monobius
         {
             Write("What is your name?");
         }
-        public void IDShipName(string playerName)
+        public void IDVesselType(string playerName)
         {
-            Write("And what is the name of your ship, " + playerName + "?");
+            Write("");
+            Write("Welcome " + playerName + ".");
+            Write("");
+            Write("Please select a vessel [BODY, WHEEL, or HOLISTIC]");
         }
-        public void IDShipType(string playerName, string shipName)
+        public void GameStart()
         {
-            Write("");
-            Write("Welcome " + playerName + ", captain of the " + shipName + ".");
-            Write("");
-            Write("Please confirm a ship type. (01, 02, or 03)");
-        }
-        public void GameStart(string playerName, string playerShipName, string enemyShipName)
-        {
-            Write("");
-            Write("While out on a scouting mission, Captain " + playerName + " recieves a transmission from a nearby ship.");
-            Write("");
-            Write("'Attention captain of the " + playerShipName + "! This is the captain of the " + enemyShipName + "!'");
-            Write("");
-            Write("'Prepared to be fired upon because I think you suck.'");
-            Write("");
             Write("Enter any key to begin combat...");
             Console.ReadLine();
         }

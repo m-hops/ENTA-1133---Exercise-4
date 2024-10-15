@@ -16,7 +16,7 @@ namespace Monobius
             try
             {
                 //JUST LAUNCHES GAME MANAGER//
-                GameManager manager = new GameManager();
+                GameManagerV2 manager = new GameManagerV2();
                 manager.GameLoop();
 
 
