@@ -16,10 +16,12 @@ namespace Monobius
         Vessel[] EnemyVessels;
 
         bool IsGameRunning = false;
-        bool IsShip0Alive = false;
+        bool IsPlayerAlive = false;
         int RoundCounter = 0;
         int EnemyLevel = 1;
         int EnemyCount = 3;
+        int MapRows = 3;
+        int MapCols = 3;
         string PlayerVesselCurrentWeapon;
 
         //PRESET SHIP POOLS//
@@ -52,7 +54,6 @@ namespace Monobius
             new int[] {15, 20, 30, 35}
         };
 
-
         List<Weapon> AvailableWeapons = new List<Weapon>();
 
         //FULL WEAPONS LIST AT GAME START//
@@ -79,10 +80,12 @@ namespace Monobius
             Dialog.Welcome();
             //Dialog.Rules();
             Player.Setup();
-            EnemeyVesselSetup();
+            VesselSelect();
             Dialog.GameStart();
-            Map.Setup();
-            Console.ReadLine();
+            Player.CurrentX = 1;
+            Player.CurrentY = 1;
+            EnemeyVesselSetup();
+            Map.Setup(MapRows,MapCols);
             IsGameRunning = true;
 
             Console.Clear();
@@ -92,10 +95,15 @@ namespace Monobius
         {
             GameSetup();
 
-            //while (IsGameRunning)
-            //{
+            while (IsGameRunning)
+            {
+                int currentX = Player.CurrentX;
+                int currentY = Player.CurrentY;
+                Room currentRoom = Map.Rooms[currentX, currentY];
 
-            //}
+                Dialog.IntroduceRoom(currentRoom);
+                PlayerControl();
+            }
         }
 
         //VESSEL CONSTRUCTOR//
@@ -117,16 +125,16 @@ namespace Monobius
             do
             {
                 isInvalidInput = false;
-                switch (Console.ReadLine())
+                switch (Dialog.Read())
                 {
 
                     case "BODY":
                         PlayerVessel = CreateVessel("BODY", 50);
                         break;
-                    case "02":
+                    case "MIND":
                         PlayerVessel = CreateVessel("MIND", 40);
                         break;
-                    case "03":
+                    case "HOLISTIC":
                         PlayerVessel = CreateVessel("HOLISTIC", 45);
                         break;
                     default:
@@ -148,6 +156,66 @@ namespace Monobius
             EnemyVessels[1] = CreateVessel("61 PIGS", 40);
             EnemyVessels[2] = CreateVessel("DALLAS", 50);
 
+        }
+        //PLAYER NAVIGATION CHECKS//
+        public void PlayerControl()
+        {
+            bool isInvalidInput;
+            do
+            {
+                Dialog.Write("Please select a cardinal direction to navigate.");
+                isInvalidInput = false;
+                switch (Dialog.Read())
+                {
+                    case "NORTH":
+                    case "N":
+                        if (Player.CurrentY <= 0)
+                        {
+                            Dialog.NavigationError();
+                        } else
+                        {
+                            Player.CurrentY--;
+                        }
+                        break;
+                    case "SOUTH":
+                    case "S":
+                        if (Player.CurrentY >= MapCols - 1)
+                        {
+                            Dialog.NavigationError();
+                        }
+                        else
+                        {
+                            Player.CurrentY++;
+                        }
+                        break;
+                    case "EAST":
+                        if (Player.CurrentX >= MapRows - 1)
+                        {
+                            Dialog.NavigationError();
+                        }
+                        else
+                        {
+                            Player.CurrentX++;
+                        }
+                        break;
+                    case "WEST":
+                        if (Player.CurrentX <= 0)
+                        {
+                            Dialog.NavigationError();
+                        }
+                        else
+                        {
+                            Player.CurrentX--;
+                        }
+                        break;
+                    default:
+                        Dialog.SelectionError();
+                        isInvalidInput = true;
+                        return;
+                }
+            } while (isInvalidInput);
+            
+            Dialog.Write(Player.CurrentY + " and " + Player.CurrentX);
         }
     }
 }

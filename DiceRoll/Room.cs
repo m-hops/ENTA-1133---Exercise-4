@@ -4,20 +4,22 @@ using System.Security.Permissions;
 namespace Monobius
 {
     //INDIVIDUAL ROOM CREATOR//
-    internal class Room
+    public class Room
     {
-        Dialog dialog;
-        public int name;
-        public int posX;
-        public int posY;
-        public bool isSearched;
+        Dialog Dialog;
+        public int Name;
+        public int PosX;
+        public int PosY;
+        public bool IsSearched;
+        public string Description;
 
-        public Room(int name, int posX, int posY, bool isSearched)
+        public Room(int name, int posX, int posY, bool isSearched, string description)
         {
-            this.name = name;
-            this.posX = posX;
-            this.posY = posY;
-            this.isSearched = isSearched;
+            Name = name;
+            PosX = posX;
+            PosY = posY;
+            IsSearched = isSearched;
+            Description = description;
         }
 
         //WHEN PLAYER ENTERS A ROOM, DO *THIS* FOR THAT ROOM//
@@ -30,13 +32,13 @@ namespace Monobius
         //WHEN PLAYER "DECIPHERS" A ROOM, DO *THIS* FOR THAT ROOM//
         public void OnRoomSearch()
         {
-            if (isSearched)
+            if (IsSearched)
             {
-                dialog.Write("GEOINT IS ALREADY DECIPHERED");
+                Dialog.Write("GEOINT IS ALREADY DECIPHERED");
             }
             else
             {
-                dialog.Write("GEOINT NOW BEING DECIPHERED");
+                Dialog.Write("GEOINT NOW BEING DECIPHERED");
             }
         }
 

@@ -20,31 +20,7 @@ namespace Monobius
         public string Read()
         {
             string txt = Console.ReadLine().ToUpper();
-
-            while (true)
-            {
-                //TOP LEVEL INVENTORY CHECK AVAILABLE AT ALL TIMES//
-                //RETURNS USER INPUT IF IT DOESNT MEET SPECIAL CONDITIONS//
-                switch (txt)
-                {
-                    case "HELP":
-                    case "H":
-                        Rules();
-                        break;
-                    case "INVENTORY":
-                    case "I":
-                        Write("Inventory");
-                        break;
-                    case "":
-                    case " ":
-                    case null:
-                        SelectionError();
-                        break;
-                    default:
-                        return txt;
-                }
-            }
-           
+            return txt;
         }
 
         //STANDARD DIALOG CLASSES//
@@ -70,7 +46,7 @@ namespace Monobius
             Write("");
             Write("Welcome " + playerName + ".");
             Write("");
-            Write("Please select a vessel [BODY, WHEEL, or HOLISTIC]");
+            Write("Please select a vessel [BODY, MIND, or HOLISTIC]");
         }
         public void GameStart()
         {
@@ -84,6 +60,10 @@ namespace Monobius
         public void SelectionError()
         {
             Write("Input invalid. Please try again.");
+        }
+        public void NavigationError()
+        {
+            Write("You can't go that way.");
         }
         public void PlayerWin(string playerName, string shipName)
         {
@@ -107,6 +87,14 @@ namespace Monobius
             Write("The hull of the " + ship0Name + " is at " + ship0Health + " HP.");
             Write("The hull of the " + ship1Name + " is at " + ship1Health + " HP.");
             Write("");
+        }
+        public void IntroduceRoom(Room room)
+        {
+            Write("Room Name: " + room.Name);
+            Write("Room PosX: " + room.PosX);
+            Write("Room PosY: " + room.PosY);
+            Write("Room Description: " + room.Description);
+
         }
     }
 }
