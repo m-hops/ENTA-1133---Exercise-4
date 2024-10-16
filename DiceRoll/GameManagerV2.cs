@@ -11,15 +11,13 @@ namespace Monobius
         Dialog Dialog = new Dialog();
         Player Player = new Player();
         Random Random = new Random();
+        Room CurrentPlayerRoom;
         Map Map = new Map();
         Vessel PlayerVessel;
-        Vessel[] EnemyVessels;
 
         bool IsGameRunning = false;
         bool IsPlayerAlive = false;
         int RoundCounter = 0;
-        int EnemyLevel = 1;
-        int EnemyCount = 3;
         int MapRows = 3;
         int MapCols = 3;
         string PlayerVesselCurrentWeapon;
@@ -84,8 +82,7 @@ namespace Monobius
             Dialog.GameStart();
             Player.CurrentX = 1;
             Player.CurrentY = 1;
-            EnemeyVesselSetup();
-            Map.Setup(MapRows,MapCols);
+            Map.Setup(MapRows,MapCols,Dice);
             IsGameRunning = true;
 
             Console.Clear();
@@ -99,9 +96,9 @@ namespace Monobius
             {
                 int currentX = Player.CurrentX;
                 int currentY = Player.CurrentY;
-                Room currentRoom = Map.Rooms[currentX, currentY];
+                CurrentPlayerRoom = Map.Rooms[currentX, currentY];
 
-                Dialog.IntroduceRoom(currentRoom);
+                Dialog.IntroduceRoom(CurrentPlayerRoom);
                 PlayerControl();
             }
         }
@@ -148,14 +145,14 @@ namespace Monobius
 
             Console.Clear();
         }
-        //ENEMY VESSEL CONSTRUCTOR//
-        public void EnemeyVesselSetup()
+        public void HandleDecryption() 
         {
-            EnemyVessels = new Vessel[EnemyCount];
-            EnemyVessels[0] = CreateVessel("THE TRU MAN", 30);
-            EnemyVessels[1] = CreateVessel("61 PIGS", 40);
-            EnemyVessels[2] = CreateVessel("DALLAS", 50);
-
+            switch (CurrentPlayerRoom.Event.Type)
+            {
+                case Event.Events.Combat:
+                    
+                    break;
+            }
         }
         //PLAYER NAVIGATION CHECKS//
         public void PlayerControl()
@@ -167,6 +164,15 @@ namespace Monobius
                 isInvalidInput = false;
                 switch (Dialog.Read())
                 {
+                    case "DECRYPT":
+                        if (CurrentPlayerRoom.IsSearched)
+                        {
+                            Dialog.FailDecryption();
+                        } else
+                        {
+                            HandleDecryption();
+                        }
+                        break;
                     case "NORTH":
                     case "N":
                         if (Player.CurrentY <= 0)
@@ -189,6 +195,7 @@ namespace Monobius
                         }
                         break;
                     case "EAST":
+                    case "E":
                         if (Player.CurrentX >= MapRows - 1)
                         {
                             Dialog.NavigationError();
@@ -199,6 +206,7 @@ namespace Monobius
                         }
                         break;
                     case "WEST":
+                    case "W":
                         if (Player.CurrentX <= 0)
                         {
                             Dialog.NavigationError();

@@ -2,10 +2,10 @@
 
 namespace Monobius
 {
-    public class Event
+    public class EventManager
     {
         //ALL EVENT TYPES//
-        enum Events
+        public enum Events
         {
             Combat,
             Treasure,
@@ -13,11 +13,14 @@ namespace Monobius
             Win
         }
 
-        Dialog dialog;
+        public Events Type;
 
-        public Event()
+        public static Event MakeCombatEvent()
         {
-            //EVENT CONSTRUCTOR//
+            return new Event
+            {
+                Type = Events.Combat,
+            };
         }
 
         public void Combat()

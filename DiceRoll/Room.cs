@@ -12,6 +12,7 @@ namespace Monobius
         public int PosY;
         public bool IsSearched;
         public string Description;
+        public Event Event;
 
         public Room(int name, int posX, int posY, bool isSearched, string description)
         {

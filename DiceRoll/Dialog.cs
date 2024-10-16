@@ -96,6 +96,10 @@ namespace Monobius
             Write("Room Description: " + room.Description);
 
         }
+        public void FailDecryption()
+        {
+            Write("This GEOINT has already been decrypted.");
+        }
     }
 }
 
