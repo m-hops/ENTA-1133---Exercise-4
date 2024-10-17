@@ -26,9 +26,7 @@ namespace Monobius
         //STANDARD DIALOG CLASSES//
         public void Welcome()
         {
-            Write("-------------------");
-            Write("MONOBIUS");
-            Write("-------------------");
+            Write("\r\n  ░▒▓██████████████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓███████▓▒░      \r\n  ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             \r\n  ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             \r\n  ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░       \r\n  ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      \r\n  ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      \r\n  ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓███████▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓███████▓▒░       \r\n                                                                                                                \r\n                                                                                                                 \r\n");
             Write("");
             Write("Enter any key to display instructions and continue...");
             Console.ReadLine();
@@ -39,18 +37,32 @@ namespace Monobius
         }
         public void IDPlayer()
         {
-            Write("What is your name?");
+            Write("Hello candidate, what is your name?");
         }
         public void IDVesselType(string playerName)
         {
             Write("");
-            Write("Welcome " + playerName + ".");
+            Write("Welcome candidate " + playerName + ".");
             Write("");
-            Write("Please select a vessel [BODY, MIND, or HOLISTIC]");
+            Write("In accordance with the agency mandate , please select your VESSEL for navigation:");
+            Write("");
+            Write("[BODY]");
+            Write("[MIND]");
+            Write("[HOLISTIC]");
+            Write("");
         }
-        public void GameStart()
+        public void GameStart(string playerName, string vesselName)
         {
-            Write("Enter any key to begin combat...");
+            Write("Candidate: " + playerName);
+            Write("Vessel: " + vesselName);
+            Write("");
+            Write("Generating 'THE FARM'.....................................100%");
+            Write("Syncronizing " + playerName + " with " + vesselName + "......................100%");
+            Write("Preparing GEOINTS for decryption.....................100%");
+            Write("Erasing " + playerName + " civilian profile......................100%");
+            Write("");
+            Write("Setup Complete");
+            Write("Press enter to enter to begin navigating THE FARM...");
             Console.ReadLine();
         }
         public void SelectWeapon()

@@ -90,7 +90,7 @@ namespace Monobius
             //Dialog.Rules();
             Player.Setup();
             VesselSelect();
-            Dialog.GameStart();
+            Dialog.GameStart(Player.Name, PlayerVessel.Name);
             Player.CurrentX = 1;
             Player.CurrentY = 1;
             Map.Setup(this,MapRows,MapCols,Dice);
