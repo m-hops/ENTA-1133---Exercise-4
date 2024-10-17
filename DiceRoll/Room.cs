@@ -6,20 +6,17 @@ namespace Monobius
     //INDIVIDUAL ROOM CREATOR//
     public class Room
     {
-        Dialog Dialog;
         public int Name;
         public int PosX;
         public int PosY;
-        public bool IsSearched;
         public string Description;
-        public Event Event;
+        public EventManager Event;
 
-        public Room(int name, int posX, int posY, bool isSearched, string description)
+        public Room(int name, int posX, int posY, string description)
         {
             Name = name;
             PosX = posX;
             PosY = posY;
-            IsSearched = isSearched;
             Description = description;
         }
 
@@ -28,19 +25,6 @@ namespace Monobius
         {
             
 
-        }
-
-        //WHEN PLAYER "DECIPHERS" A ROOM, DO *THIS* FOR THAT ROOM//
-        public void OnRoomSearch()
-        {
-            if (IsSearched)
-            {
-                Dialog.Write("GEOINT IS ALREADY DECIPHERED");
-            }
-            else
-            {
-                Dialog.Write("GEOINT NOW BEING DECIPHERED");
-            }
         }
 
         //WHEN PLAYER LEAVES A ROOM, DO *THIS* FOR THAT ROOM//

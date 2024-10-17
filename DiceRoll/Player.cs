@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 //HUMAN PLAYER INFORMATION//
 namespace Monobius
 {
-    internal class Player
+    public class Player
     {
         public string Name;
         public int CurrentX;
         public int CurrentY;
+        public Inventory Inventory = new Inventory();
         Dialog Dialog = new Dialog();
 
         //INITIAL PLAYER SERTUP//

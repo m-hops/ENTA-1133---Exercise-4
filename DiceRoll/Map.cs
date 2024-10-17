@@ -10,7 +10,7 @@ namespace Monobius
         public Room[,] Rooms;
         public List<Vessel> EnemyVessels;
 
-        public void Setup(int rows, int cols, DieRoller dice)
+        public void Setup(GameManagerV2 gm, int rows, int cols, DieRoller dice)
         {
             Rooms = new Room[rows, cols];
 
@@ -18,34 +18,24 @@ namespace Monobius
             {
                 for (int currentCol = 0; currentCol < cols; currentCol++)
                 {
-                    Rooms[currentRow, currentCol] = new Room(RoomName, currentRow, currentCol, false, "");
+                    Rooms[currentRow, currentCol] = new Room(RoomName, currentRow, currentCol, "");
                     //Console.Write("GEOINT [" + rooms[currentRow, currentCol].name + "] ({0:0}, {1:0}) ", rooms[currentRow, currentCol].posX, rooms[currentRow, currentCol].posY);
                     //Console.WriteLine("");
                     RoomName++;
                 }
             }
 
+            //SETUP ALL ENEMY VESSELS//
             EnemyVessels = new List<Vessel>();
-            EnemyVessels.Add(CreateEnemyVessel("THE TRU MAN", 30));
-            EnemyVessels.Add(CreateEnemyVessel("61 PIGS", 40));
-            EnemyVessels.Add(CreateEnemyVessel("DALLAS", 50));
+            for (int i = GameManagerV2.k_FirstEnemyVesselPresetIndex; i < gm.kVesselPresetTypes.Length; i++) 
+            {
+                EnemyVessels.Add(gm.CreateVesselFromPreset(i));
+            }
 
-            Event myEvent = Event.MakeCombatEvent();
+            EventManager myEvent = new EventManager(EventManager.Events.Treasure);
 
             Rooms[1,1].Event = myEvent;
 
-        }
-
-        //VESSEL CONSTRUCTOR//
-        public Vessel CreateEnemyVessel(string name, int hp)
-        {
-            Vessel v = new Vessel(name, hp);
-
-            //for (int i = 0; i < Vessel.kWeaponCount; i++)
-            //{
-            //    v.SetWeapon(kVesselPresetWeaponNames[presetIndex][i], kVesselPresetWeaponAttacks[presetIndex][i], i);
-            //}
-            return v;
         }
     }
 }

@@ -75,11 +75,11 @@ namespace Monobius
             Write("The " + shipname + " is the winner.");
             Write("");
         }
-        public void RollRecap(string playerName, string enemyShipName, int ship0Roll, int ship1Roll, string ship0AttackName, string ship1AttackName)
+        public void RollRecap(string playerName, string enemyVesselName, int playerRoll, int enemyRoll, string playerAttackName, string enemyAttackName)
         {
             Write("");
-            Write(playerName + " used a " + ship0AttackName + " with " + ship0Roll + " attack power.");
-            Write(enemyShipName + " used a " + ship1AttackName + " with " + ship1Roll + " attack power.");
+            Write(playerName + " used a " + playerAttackName + " with " + playerRoll + " attack power.");
+            Write(enemyVesselName + " used a " + enemyAttackName + " with " + enemyRoll + " attack power.");
         }
         public void RoundRecap(string ship0Name, string ship1Name, int ship0Health, int ship1Health)
         {
@@ -99,6 +99,29 @@ namespace Monobius
         public void FailDecryption()
         {
             Write("This GEOINT has already been decrypted.");
+        }
+        public void TreasureWeaponSelect0(string weapon)
+        {
+            Write("You've discovered [" + weapon + "].");
+            Write("Would you like to REPLACE an existing weapon or DESTROY this one?");
+            Write("");
+        }
+        public void TreasureWeaponSelect1(GameManagerV2 gm)
+        {
+            Write("Which weapon would you like to replace?");
+            Write(gm.PlayerVessel.Weapons[0].Name);
+            Write(gm.PlayerVessel.Weapons[1].Name);
+            Write(gm.PlayerVessel.Weapons[2].Name);
+            Write(gm.PlayerVessel.Weapons[3].Name);
+            Write("");
+        }
+        public void TreasureWeaponSelect2()  
+        {
+            Write("You discard the item and carry on");
+        }
+        public void ItemSelect(Item item)
+        {
+            Write("You just added a " + item.Name + " to your inventory.");
         }
     }
 }

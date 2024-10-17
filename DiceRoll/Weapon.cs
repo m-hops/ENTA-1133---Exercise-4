@@ -2,14 +2,13 @@
 
 namespace Monobius
 {
-    public class Weapon
+    public class Weapon: Item
     {
-        public string Name;
         public int Attack;
 
         public Weapon(string name, int attack)
+            :base(ItemType.Weapon, name)
         {
-            Name = name;
             Attack = attack;
         }
     }

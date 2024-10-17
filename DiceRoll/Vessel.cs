@@ -30,6 +30,19 @@ namespace Monobius
                 weaponsReady.Add(weaponSlotIndex);
             }
         }
+        public int GetWeaponIndexByName(string weaponName)
+        {
+            for (int i = 0; i < Weapons.Length; i++)
+            {
+                if (Weapons[i].Name == weaponName)
+                {
+                    return i;
+                }
+            }
+
+            //IF WEAPON NOT AVAILABLE, -1 WILL RE PROMPT PLAYER FOR INPUT//
+            return -1;
+        }
         //CHECKS ARRAY TO SEE IF WEAPON IS AVAILABLE//
         public int GetAvailableWeaponIndexByName(string weaponName)
         {

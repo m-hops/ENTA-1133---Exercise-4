@@ -1,30 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 namespace Monobius
 {
     public class GameManagerV2
     {
         //CLASS INSTANCE VARIABLES//
-        DieRoller Dice = new DieRoller();
-        Dialog Dialog = new Dialog();
-        Player Player = new Player();
-        Random Random = new Random();
-        Room CurrentPlayerRoom;
-        Map Map = new Map();
-        Vessel PlayerVessel;
+        public DieRoller Dice = new DieRoller();
+        public Dialog Dialog = new Dialog();
+        public Player Player = new Player();
+        public Random Random = new Random();
+        public Room CurrentPlayerRoom;
+        public Map Map = new Map();
+        public Vessel PlayerVessel;
 
-        bool IsGameRunning = false;
-        bool IsPlayerAlive = false;
-        int RoundCounter = 0;
-        int MapRows = 3;
-        int MapCols = 3;
-        string PlayerVesselCurrentWeapon;
+        public bool IsGameRunning = false;
+        public bool IsPlayerAlive = false;
+        public int MapRows = 3;
+        public int MapCols = 3;
+        public string PlayerVesselCurrentWeapon;
+        public const int k_FirstEnemyVesselPresetIndex = 3;
 
         //PRESET SHIP POOLS//
         //FIRST 3 ARE PLAYER CHOICE & THE REST ARE ENEMY NPCS//
-        readonly string[] kVesselPresetTypes = new string[]
+        public readonly string[] kVesselPresetTypes = new string[]
         {
             "BODY",
             "MIND",
@@ -33,7 +33,7 @@ namespace Monobius
             "SIXTY ONE PIGS",
             "DALLAS"
         };
-        readonly string[][] kVesselPresetWeaponNames = new string[][]
+        public readonly string[][] kVesselPresetWeaponNames = new string[][]
         {
             new string[] {"INVESTIGATE", "QUESTION", "PUNCH", "HANDGUN"},
             new string[] {"INVESTIGATE", "QUESTION", "MEDITATE", "DOWSING"},
@@ -42,7 +42,7 @@ namespace Monobius
             new string[] {"DWISEN", "AIR STRIKE", "SEED", "CMC SIXTY TWO"},
             new string[] {"JACK", "ELM", "GNOLL", "REVENGE"}
         };
-        readonly int[][] kVesselPresetWeaponAttacks = new int[][]
+        public readonly int[][] kVesselPresetWeaponAttacks = new int[][]
         {
             new int[] {5, 10, 20, 25},
             new int[] {5, 10, 15, 35},
@@ -51,27 +51,38 @@ namespace Monobius
             new int[] {10, 15, 25, 30},
             new int[] {15, 20, 30, 35}
         };
+        public readonly int[] kVesselPresetHP = new int[]
+        {
+            50,
+            40,
+            45,
+            30,
+            40,
+            50
+        };
 
-        List<Weapon> AvailableWeapons = new List<Weapon>();
+        public List<Weapon> TreasurePoolWeapons = new List<Weapon>();
+        public List<Item> TreasurePoolConsumable = new List<Item>();
+        public List<Item> TreasurePoolPassive = new List<Item>();
 
         //FULL WEAPONS LIST AT GAME START//
-        public void GenerateAvailableWeapons()
+        public void GenerateTreasurePools()
         {
-            AvailableWeapons.Add(new Weapon("INVESTIGATE", 5));
-            AvailableWeapons.Add(new Weapon("QUESTION", 10));
-            AvailableWeapons.Add(new Weapon("MEDITATE", 15));
-            AvailableWeapons.Add(new Weapon("PUNCH", 20));
-            AvailableWeapons.Add(new Weapon("HANDGUN", 25));
-            AvailableWeapons.Add(new Weapon("DREAM", 30));
-            AvailableWeapons.Add(new Weapon("DOWSING", 35));
-            AvailableWeapons.Add(new Weapon("XENOGLOSSY", 40));
-            AvailableWeapons.Add(new Weapon("WARRANT", 45));
-            AvailableWeapons.Add(new Weapon("INSECTOTHOPTER", 60));
-            AvailableWeapons.Add(new Weapon("INSIGHT", 70));
-            AvailableWeapons.Add(new Weapon("PROPHECY", 80));
-            AvailableWeapons.Add(new Weapon("M91", 100));
-        }
+            TreasurePoolWeapons.Add(new Weapon("HANDGUN", 25));
+            TreasurePoolWeapons.Add(new Weapon("DREAM", 30));
+            TreasurePoolWeapons.Add(new Weapon("DOWSING", 35));
+            TreasurePoolWeapons.Add(new Weapon("XENOGLOSSY", 40));
+            TreasurePoolWeapons.Add(new Weapon("WARRANT", 45));
+            TreasurePoolWeapons.Add(new Weapon("INSECTOTHOPTER", 60));
+            TreasurePoolWeapons.Add(new Weapon("INSIGHT", 70));
+            TreasurePoolWeapons.Add(new Weapon("PROPHECY", 80));
+            TreasurePoolWeapons.Add(new Weapon("M91", 100));
 
+            TreasurePoolConsumable.Add(new ItemRepairHP());
+
+            TreasurePoolPassive.Add(new ItemDamageNegator());
+
+        }
         //ONE TIME SETUPS//
         public void GameSetup()
         {
@@ -82,7 +93,9 @@ namespace Monobius
             Dialog.GameStart();
             Player.CurrentX = 1;
             Player.CurrentY = 1;
-            Map.Setup(MapRows,MapCols,Dice);
+            Map.Setup(this,MapRows,MapCols,Dice);
+            GenerateTreasurePools();
+            CurrentPlayerRoom = Map.Rooms[Player.CurrentX, Player.CurrentY];
             IsGameRunning = true;
 
             Console.Clear();
@@ -94,25 +107,22 @@ namespace Monobius
 
             while (IsGameRunning)
             {
-                int currentX = Player.CurrentX;
-                int currentY = Player.CurrentY;
-                CurrentPlayerRoom = Map.Rooms[currentX, currentY];
 
                 Dialog.IntroduceRoom(CurrentPlayerRoom);
                 PlayerControl();
             }
         }
-
-        //VESSEL CONSTRUCTOR//
-        public Vessel CreateVessel(string name, int hp)
+        public Vessel CreateVesselFromPreset(int presetIndex)
         {
-            Vessel v = new Vessel(name, hp);
+            Vessel vessel = new Vessel(kVesselPresetTypes[presetIndex], kVesselPresetHP[presetIndex]);
 
-            //for (int i = 0; i < Vessel.kWeaponCount; i++)
-            //{
-            //    v.SetWeapon(kVesselPresetWeaponNames[presetIndex][i], kVesselPresetWeaponAttacks[presetIndex][i], i);
-            //}
-            return v;
+            for (int j = 0; j < Vessel.kWeaponCount; j++)
+            {
+                Weapon weapon = new Weapon(kVesselPresetWeaponNames[presetIndex][j], kVesselPresetWeaponAttacks[presetIndex][j]);
+                vessel.SetWeapon(weapon, j);
+            }
+
+            return vessel;
         }
         //PLAYER VESSEL SELECTION//
         public void VesselSelect()
@@ -126,13 +136,13 @@ namespace Monobius
                 {
 
                     case "BODY":
-                        PlayerVessel = CreateVessel("BODY", 50);
+                        PlayerVessel = CreateVesselFromPreset(0);
                         break;
                     case "MIND":
-                        PlayerVessel = CreateVessel("MIND", 40);
+                        PlayerVessel = CreateVesselFromPreset(1);
                         break;
                     case "HOLISTIC":
-                        PlayerVessel = CreateVessel("HOLISTIC", 45);
+                        PlayerVessel = CreateVesselFromPreset(2);
                         break;
                     default:
                         Dialog.SelectionError();
@@ -145,13 +155,37 @@ namespace Monobius
 
             Console.Clear();
         }
-        public void HandleDecryption() 
+        public string InGameControlRead()
         {
-            switch (CurrentPlayerRoom.Event.Type)
+            while (true) 
             {
-                case Event.Events.Combat:
-                    
-                    break;
+                string userInput = Dialog.Read();
+                switch (userInput)
+                {
+                    case "INVENTORY":
+                    case "I":
+                        DisplayInventory();
+                        break;
+                    default:
+                        return userInput;
+                }
+            }
+        }
+        public void DisplayInventory()
+        {
+            for (int i = 0; i < Vessel.kWeaponCount; i++)
+            {
+                Dialog.Write(PlayerVessel.Weapons[i].Name);
+            }
+
+            for (int i = 0; i < Player.Inventory.PassiveItems.Count; i++) 
+            {
+                Dialog.Write(Player.Inventory.PassiveItems[i].Name);
+            }
+
+            for (int i = 0; i < Player.Inventory.ConsumableItems.Count; i++)
+            {
+                Dialog.Write(Player.Inventory.ConsumableItems[i].Name);
             }
         }
         //PLAYER NAVIGATION CHECKS//
@@ -162,15 +196,15 @@ namespace Monobius
             {
                 Dialog.Write("Please select a cardinal direction to navigate.");
                 isInvalidInput = false;
-                switch (Dialog.Read())
+                switch (InGameControlRead())
                 {
                     case "DECRYPT":
-                        if (CurrentPlayerRoom.IsSearched)
+                        if (CurrentPlayerRoom.Event == null)
                         {
                             Dialog.FailDecryption();
                         } else
                         {
-                            HandleDecryption();
+                            CurrentPlayerRoom.Event.Execute(this);
                         }
                         break;
                     case "NORTH":
@@ -221,6 +255,8 @@ namespace Monobius
                         isInvalidInput = true;
                         return;
                 }
+                CurrentPlayerRoom = Map.Rooms[Player.CurrentX, Player.CurrentY];
+
             } while (isInvalidInput);
             
             Dialog.Write(Player.CurrentY + " and " + Player.CurrentX);
