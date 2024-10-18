@@ -1,7 +1,7 @@
 ﻿namespace Monobius
 {
 
-    public abstract class Item
+    public class Item
     {
         public enum ItemType
         {
@@ -17,7 +17,9 @@
             Name = name;
         }
 
-        public abstract void Consume(GameManagerV2 gm);
+        public virtual void Consume(GameManagerV2 gm)
+        {
+        }
     }
 
     public class ItemRepairHP: Item

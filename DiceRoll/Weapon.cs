@@ -1,6 +1,6 @@
 ﻿namespace Monobius
 {
-    public class Weapon: Item
+    public class Weapon : Item
     {
         public int Attack;
 
