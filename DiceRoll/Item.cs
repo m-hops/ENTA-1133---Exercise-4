@@ -1,7 +1,7 @@
 ﻿namespace Monobius
 {
 
-    public class Item
+    public abstract class Item
     {
         public enum ItemType
         {
@@ -11,19 +11,13 @@
         }
         public ItemType Type;
         public string Name;
-
-        //public List<string> itemsAvailable = new List<string>();
-
         public Item(ItemType type, string name)
         {
             Type = type;
             Name = name;
         }
 
-        public virtual void Consume(GameManagerV2 gm)
-        {
-
-        }
+        public abstract void Consume(GameManagerV2 gm);
     }
 
     public class ItemRepairHP: Item

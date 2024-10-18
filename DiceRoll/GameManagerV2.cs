@@ -196,13 +196,7 @@ namespace Monobius
                 switch (InGameControlRead())
                 {
                     case "DECRYPT":
-                        if (CurrentPlayerRoom.Event == null)
-                        {
-                            Dialog.FailDecryption();
-                        } else
-                        {
-                            CurrentPlayerRoom.Event.Execute(this);
-                        }
+                        CurrentPlayerRoom.OnDecript(this);
                         break;
                     case "NORTH":
                     case "N":

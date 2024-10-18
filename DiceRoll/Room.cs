@@ -18,18 +18,18 @@
             Event = roomEvent;
         }
 
-        //WHEN PLAYER ENTERS A ROOM, DO *THIS* FOR THAT ROOM//
-        public void OnRoomEnter()
+        public void OnDecript(GameManagerV2 gm)
         {
-            
-
+            if (Event == null)
+            {
+                gm.Dialog.FailDecryption();
+            }
+            else
+            {
+                Event.Execute(gm);
+            }
         }
 
-        //WHEN PLAYER LEAVES A ROOM, DO *THIS* FOR THAT ROOM//
-        public void OnRoomExit()
-        {
-
-        }
     }
 }
 
