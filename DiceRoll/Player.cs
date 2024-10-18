@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-//HUMAN PLAYER INFORMATION//
-//FOR NOW, ONLY RETAINS NAME//
-namespace Assignment1
+﻿//HUMAN PLAYER INFORMATION//
+namespace Monobius
 {
-    internal class Player
+    public class Player
     {
-        public string pName;
-
-    }
+        public string Name;
+        public int CurrentX;
+        public int CurrentY;
+        public int AttackBonus = 0;
+        public int DefenseBonus = 0;
+        public Vessel Vessel;
+        public Inventory Inventory = new Inventory();
+    } 
 }
 

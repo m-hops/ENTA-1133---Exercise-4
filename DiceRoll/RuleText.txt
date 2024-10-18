@@ -1,25 +1,49 @@
-SLOWER THAN LIGHT (v0.3)
+MONOBIUS (v0.4)
 
-How to play:
+{HOW TO PLAY}
 
-+ Enter your name.
-+ Name your ship.
-+ Choose a ship type (01, 02, or 03).
-+ Select one of the available weapons in your weapons pool to fire at the enemy.
-+ After firing a weapon, that weapon will no longer be available to fire until the existing weapon pool is depleted.
-+ The enemy will also choose a random attack to fire at you.
-+ Whoever has the higher score wins the round and the difference between the two scores is applied as damage to the losing ship.
-+ Once a ship hits 0HP, it is destroyed and the other player wins.
+- Navigate a 3x3 grid using cardinal directions (N, E, S, W)
+- Each GEOINT can have DECRYPT run on it once to reveal what is hidden.
+- Locate the three enemys and destroy them to win.
+- Collecting upgrades from treasure rooms makes you more powerful and more likely to win.
+- Typing INVENTORY will allow you to check your current status and current inventory.
+- Items in INVENTORY tagged CONSUMABLE can be used at will while items tagged PASSIVE are active at all times
 
-Weapon Types & Damage Range
+{VESSELS AND LOADOUTS}
 
-Laser - (1-6)
-Missle - (1-10)
-Torpedo - (1-12)
-Nuke - (1-20)
+BODY - (INVESTIGATE//QUESTION//PUNCH//HANDGUN)
+MIND - (INVESTIGATE//QUESTION//MEDITATE//DOWSING)
+HOLISTIC - (INVESTIGATE//INVESTIGATE//PUNCH//DREAM)
 
-Ship Types & Loadouts
+{ASSETS AND DAMAGE RANGE}
 
-01 - (Laser//Missle//Torpedo//Nuke)
-02 - (Missle//Missle//Torpedo//Torpedo)
-03 - (Laser//Laser//Nuke//Nuke)
+INVESTIGATE - (1-5)
+QUESTION - (1-10)
+MEDITATE - (1-15)
+PUNCH - (1-20)
+HANDGUN - (1-25)
+DREAM - (1-30)
+DOWSING - (1-35)
+XENOGLOSSY - (1-40)
+WARRANT - (1-45)
+INSECTOTHOPTER - (1-60)
+INSIGHT - (1-70)
+PROPHECY - (1-80)
+M91 - (1-100)
+
+{CONSUMABLES}
+
+COFFEE - Restore between 1-10 vitality
+
+{PASSIVES}
+
+CEREBRUM - Negate damage player would take by 5
+FRONTAL LOBE - Negate damage player would take by 10
+OCCIPITAL LOBE - Negate damage player would take by 15
+LIMBIC LOBE - Increase attack rolls by 5
+PARIETEL LOBE - Increase attack rolls by 10
+THIRD EYE - - Increase attack rolls by 15
+
+
+
+

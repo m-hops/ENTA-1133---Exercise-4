@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assignment1
+namespace Monobius
 {
-    internal class DieRoller
+    public class DieRoller
     {
         //RANDOM NEEDS TO BE ROLLED HERE//
         //ROLLING WITHIN ROLL DOES NOT PRODUCE CONSISTENT RANDOM RESULTS//

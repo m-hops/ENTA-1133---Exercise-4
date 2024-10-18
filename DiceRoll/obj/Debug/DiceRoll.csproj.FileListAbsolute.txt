@@ -19,3 +19,10 @@ C:\Users\s2433016\Documents\GitHub\ENTA-1133---Exercise-4\DiceRoll\obj\Debug\Dic
 C:\Users\s2433016\Documents\GitHub\ENTA-1133---Exercise-4\DiceRoll\bin\Debug\DiceRoll.exe.config
 C:\Users\s2433016\Documents\GitHub\ENTA-1133---Exercise-4\DiceRoll\bin\Debug\DiceRoll.exe
 C:\Users\s2433016\Documents\GitHub\ENTA-1133---Exercise-4\DiceRoll\bin\Debug\DiceRoll.pdb
+C:\Users\madel\Documents\ENTA-1133---Exercise-4\DiceRoll\bin\Debug\DiceRoll.exe.config
+C:\Users\madel\Documents\ENTA-1133---Exercise-4\DiceRoll\bin\Debug\DiceRoll.exe
+C:\Users\madel\Documents\ENTA-1133---Exercise-4\DiceRoll\bin\Debug\DiceRoll.pdb
+C:\Users\madel\Documents\ENTA-1133---Exercise-4\DiceRoll\obj\Debug\DiceRoll.csproj.AssemblyReference.cache
+C:\Users\madel\Documents\ENTA-1133---Exercise-4\DiceRoll\obj\Debug\DiceRoll.csproj.CoreCompileInputs.cache
+C:\Users\madel\Documents\ENTA-1133---Exercise-4\DiceRoll\obj\Debug\DiceRoll.exe
+C:\Users\madel\Documents\ENTA-1133---Exercise-4\DiceRoll\obj\Debug\DiceRoll.pdb

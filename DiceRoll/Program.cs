@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assignment1
+namespace Monobius
 {
     internal class Program
     {
@@ -13,8 +9,10 @@ namespace Assignment1
             try
             {
                 //JUST LAUNCHES GAME MANAGER//
-                GameManager manager = new GameManager();
+                GameManagerV2 manager = new GameManagerV2();
                 manager.GameLoop();
+
+
             }
             catch (Exception e)
             {
