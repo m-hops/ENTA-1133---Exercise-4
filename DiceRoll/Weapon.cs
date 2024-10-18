@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Monobius
+﻿namespace Monobius
 {
     public class Weapon: Item
     {

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 //DIALOG CLASS IS USED FOR LARGER DIALOG BASED VALUES//
 namespace Monobius

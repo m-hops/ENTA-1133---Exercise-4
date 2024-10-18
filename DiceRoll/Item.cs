@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Monobius
+﻿namespace Monobius
 {
-    
+
     public class Item
     {
         public enum ItemType
