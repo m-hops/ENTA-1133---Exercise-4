@@ -30,20 +30,33 @@ namespace Monobius
 
     public class ItemRepairHP: Item
     {
-        public ItemRepairHP(): base(ItemType.Consumable, "REPAIR KIT")
+        int RollLimit;
+        public ItemRepairHP(string name, int rollLimit): base(ItemType.Consumable, "REPAIR KIT")
         {
-
+            RollLimit = rollLimit;
         }
         public override void Consume(GameManagerV2 gm)
         {
-            gm.PlayerVessel.Health += gm.Dice.Roll(10);
+            int diceRoll = gm.Dice.Roll(RollLimit);
+            gm.PlayerVessel.Health += diceRoll;
+
+            gm.Dialog.Write("You gained back some health " + diceRoll);
         }
     }
     public class ItemDamageNegator : Item
     {
-        public ItemDamageNegator() : base(ItemType.Passive, "CEREBRUM")
-        {
+        int NegateAmount;
 
+        public ItemDamageNegator(string name, int negateAmount) : base(ItemType.Passive, "CEREBRUM")
+        {
+            NegateAmount = negateAmount;
+        }
+        public override void Consume(GameManagerV2 gm)
+        {
+            gm.Player.DefenseBonus += NegateAmount;
+
+            gm.Dialog.Write("Your defense bonus was increase by " + NegateAmount);
+            gm.Dialog.Write("Your defense bonus is now at " + gm.Player.DefenseBonus);
         }
     }
 }

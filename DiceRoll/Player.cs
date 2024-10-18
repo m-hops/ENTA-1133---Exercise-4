@@ -13,6 +13,8 @@ namespace Monobius
         public string Name;
         public int CurrentX;
         public int CurrentY;
+        public int AttackBonus = 0;
+        public int DefenseBonus = 0;
         public Inventory Inventory = new Inventory();
         Dialog Dialog = new Dialog();
 

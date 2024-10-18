@@ -62,7 +62,7 @@ namespace Monobius
             Write("Erasing " + playerName + " civilian profile......................100%");
             Write("");
             Write("Setup Complete");
-            Write("Press enter to enter to begin navigating THE FARM...");
+            Write("Press enter to begin navigating THE FARM...");
             Console.ReadLine();
         }
         public void SelectWeapon()

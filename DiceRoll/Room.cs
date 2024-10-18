@@ -12,12 +12,13 @@ namespace Monobius
         public string Description;
         public EventManager Event;
 
-        public Room(int name, int posX, int posY, string description)
+        public Room(int name, int posX, int posY, string description, EventManager roomEvent)
         {
             Name = name;
             PosX = posX;
             PosY = posY;
             Description = description;
+            Event = roomEvent;
         }
 
         //WHEN PLAYER ENTERS A ROOM, DO *THIS* FOR THAT ROOM//

@@ -53,6 +53,7 @@ namespace Monobius
         }
         public void Combat(GameManagerV2 gm)
         {
+            gm.PlayerVessel.ResetWeapons();
             Vessel enemyVessel = gm.Map.EnemyVessels[0];
             gm.Map.EnemyVessels.RemoveAt(0);
 
@@ -70,27 +71,31 @@ namespace Monobius
                 }
             }
 
+            if (gm.Map.EnemyVessels.Count == 0)
+            {
+                Win(gm);
+            }
         }
         public void CombatRound(GameManagerV2 gm, Vessel enemyVessel)
         {
-            gm.Dialog.Write("Current ASSETS Online: ");
-            gm.Dialog.Write("----------------------");
-
-            //RUNS THROUGH ARRAY AND LIST TO RETURN STILL VALID WEAPONS OR QUEUE WEAPON RESET//
-            for (int i = 0; i < gm.PlayerVessel.weaponsReady.Count; i++)
-            {
-                int weaponIndex = gm.PlayerVessel.weaponsReady[i];
-                gm.Dialog.Write(gm.PlayerVessel.Weapons[weaponIndex].Name);
-            }
-
-            gm.Dialog.Write("----------------------");
-            gm.Dialog.SelectWeapon();
 
             int playerVesselWeaponIndex = -1;
 
             while (playerVesselWeaponIndex <0)
             {
-                string playerVesselWeaponSelection = gm.Dialog.Read();
+                gm.Dialog.Write("Current ASSETS Online: ");
+                gm.Dialog.Write("----------------------");
+
+                //RUNS THROUGH ARRAY AND LIST TO RETURN STILL VALID WEAPONS OR QUEUE WEAPON RESET//
+                for (int i = 0; i < gm.PlayerVessel.weaponsReady.Count; i++)
+                {
+                    int weaponIndex = gm.PlayerVessel.weaponsReady[i];
+                    gm.Dialog.Write(gm.PlayerVessel.Weapons[weaponIndex].Name);
+                }
+
+                gm.Dialog.Write("----------------------");
+                gm.Dialog.SelectWeapon();
+                string playerVesselWeaponSelection = gm.InGameControlRead();
                 playerVesselWeaponIndex = gm.PlayerVessel.GetAvailableWeaponIndexByName(playerVesselWeaponSelection);
 
                 if (playerVesselWeaponIndex < 0)
@@ -107,6 +112,10 @@ namespace Monobius
             int enemyVesselDice = enemyVessel.Weapons[playerVesselWeaponIndex].Attack;
             int playerVesselRollResult = gm.Dice.Roll(playerVesselDice);
             int enemyVesselRollResult = gm.Dice.Roll(enemyVesselDice);
+            int playerVesselAttackBonus = gm.Player.AttackBonus;
+            int playerVesselDefenseBonus = gm.Player.DefenseBonus;
+
+            playerVesselRollResult += playerVesselAttackBonus;
 
             gm.Dialog.RollRecap(gm.Player.Name, enemyVessel.Name, playerVesselRollResult, enemyVesselRollResult, playerVesselCurrentWeapon, enemyVesselCurrentWeapon);
 
@@ -123,9 +132,18 @@ namespace Monobius
             else if (playerVesselRollResult < enemyVesselRollResult)
             {
                 int dmg = enemyVesselRollResult - playerVesselRollResult;
-                gm.PlayerVessel.Health -= dmg;
-                gm.Dialog.Write("");
-                gm.Dialog.Write("The " + gm.PlayerVessel.Name + " takes " + dmg + " damage.");
+                dmg -= playerVesselDefenseBonus;
+
+                if (dmg > 0)
+                {
+                    gm.PlayerVessel.Health -= dmg;
+                    gm.Dialog.Write("");
+                    gm.Dialog.Write("The " + gm.PlayerVessel.Name + " takes " + dmg + " damage.");
+                } else
+                {
+                    gm.Dialog.Write("Your shields absord the weak attack.");
+                }
+                
 
             }
             //IF BOTH SHIPS ROLL THE SAME//
@@ -143,9 +161,8 @@ namespace Monobius
             {
                 gm.Dialog.Write(gm.PlayerVessel.Name + " was killed by the enemy.");
                 gm.IsPlayerAlive = false;
-                gm.IsGameRunning = false;
                 IsEventConcluded = true;
-                Console.ReadLine();
+                Lose(gm);
             }
 
             if (enemyVessel.Health <= 0)
@@ -158,7 +175,7 @@ namespace Monobius
        
         public void Treasure(GameManagerV2 gm)
         {
-            int roomSelection = 2;//gm.Dice.Roll(3);
+            int roomSelection = gm.Dice.Roll(3);
             List<Weapon> weaponPool = gm.TreasurePoolWeapons;
             List<Item> consumablePool = gm.TreasurePoolConsumable;
             List<Item> passivePool = gm.TreasurePoolPassive;
@@ -190,6 +207,7 @@ namespace Monobius
                         selectedItem = passivePool[selectedIndex];
                         passivePool.RemoveAt(selectedIndex);
                         TreasureItem(gm, selectedItem);
+                        selectedItem.Consume(gm);
                     }
                     break;
                 default:
@@ -244,10 +262,13 @@ namespace Monobius
         public void Lose(GameManagerV2 gm)
         {
             //GAME OVER IF PLAYER DIES//
+            gm.IsGameRunning = false;
+            Console.ReadLine();
         }
         public void Win(GameManagerV2 gm)
         {
-            //GAME OVER IF PLAYER WINS//
+            gm.IsGameRunning = false;
+                Console.ReadLine();
         }
     }
 }

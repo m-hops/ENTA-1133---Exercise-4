@@ -14,17 +14,6 @@ namespace Monobius
         {
             Rooms = new Room[rows, cols];
 
-            for (int currentRow = 0; currentRow < rows; currentRow++)
-            {
-                for (int currentCol = 0; currentCol < cols; currentCol++)
-                {
-                    Rooms[currentRow, currentCol] = new Room(RoomName, currentRow, currentCol, "");
-                    //Console.Write("GEOINT [" + rooms[currentRow, currentCol].name + "] ({0:0}, {1:0}) ", rooms[currentRow, currentCol].posX, rooms[currentRow, currentCol].posY);
-                    //Console.WriteLine("");
-                    RoomName++;
-                }
-            }
-
             //SETUP ALL ENEMY VESSELS//
             EnemyVessels = new List<Vessel>();
             for (int i = GameManagerV2.k_FirstEnemyVesselPresetIndex; i < gm.kVesselPresetTypes.Length; i++) 
@@ -32,10 +21,35 @@ namespace Monobius
                 EnemyVessels.Add(gm.CreateVesselFromPreset(i));
             }
 
-            EventManager myEvent = new EventManager(EventManager.Events.Treasure);
+            List<Room> availableRooms = new List<Room>();
+            Room startingRoom = new Room(0, 0, 0, "Starting Room", new EventManager(EventManager.Events.Treasure));
+            availableRooms.Add(new Room(1, 0, 0, "Enemy Room", new EventManager(EventManager.Events.Combat)));
+            availableRooms.Add(new Room(2, 0, 0, "Enemy Room", new EventManager(EventManager.Events.Combat)));
+            availableRooms.Add(new Room(3, 0, 0, "Enemy Room", new EventManager(EventManager.Events.Combat)));
+            availableRooms.Add(new Room(4, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
+            availableRooms.Add(new Room(5, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
+            availableRooms.Add(new Room(6, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
+            availableRooms.Add(new Room(7, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
+            availableRooms.Add(new Room(8, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
 
-            Rooms[1,1].Event = myEvent;
+            Rooms[1, 1] = startingRoom;
 
+            for (int currentRow = 0; currentRow < rows; currentRow++)
+            {
+                for (int currentCol = 0; currentCol < cols; currentCol++)
+                {
+                    Room r = Rooms[currentRow, currentCol];
+                    if (r == null)
+                    {
+                        int roomIndex = gm.Dice.Roll(availableRooms.Count) - 1;
+                        r = availableRooms[roomIndex];
+                        availableRooms.RemoveAt(roomIndex);
+                    }
+                    r.PosX = currentRow;
+                    r.PosY = currentCol;
+                    Rooms[currentRow, currentCol] = r;
+                }
+            }
         }
     }
 }

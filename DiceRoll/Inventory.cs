@@ -20,5 +20,25 @@ namespace Monobius
                     break;
             }
         }
+
+        public Item GetConsumableItemByName(string name)
+        {
+            for (int i = 0; i < ConsumableItems.Count; i++)
+            {
+                if (ConsumableItems[i].Name == name)
+                {
+                    return ConsumableItems[i];
+                }
+            }
+
+            return null;
+        }
+
+        public void RemoveItem(Item item) 
+        { 
+            ConsumableItems.Remove(item);
+            PassiveItems.Remove(item);
+        }
+
     }
 }

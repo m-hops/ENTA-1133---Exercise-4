@@ -56,9 +56,9 @@ namespace Monobius
             50,
             40,
             45,
-            30,
-            40,
-            50
+            1,
+            1,
+            1
         };
 
         public List<Weapon> TreasurePoolWeapons = new List<Weapon>();
@@ -78,9 +78,19 @@ namespace Monobius
             TreasurePoolWeapons.Add(new Weapon("PROPHECY", 80));
             TreasurePoolWeapons.Add(new Weapon("M91", 100));
 
-            TreasurePoolConsumable.Add(new ItemRepairHP());
+            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
 
-            TreasurePoolPassive.Add(new ItemDamageNegator());
+            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
+            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
+            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
+            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
+            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
+            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
 
         }
         //ONE TIME SETUPS//
@@ -167,7 +177,17 @@ namespace Monobius
                         DisplayInventory();
                         break;
                     default:
-                        return userInput;
+                        Item item = Player.Inventory.GetConsumableItemByName(userInput);
+
+                        if (item != null) 
+                        {
+                            item.Consume(this);
+                            Player.Inventory.RemoveItem(item);
+                        } else
+                        {
+                            return userInput;
+                        }
+                        break;
                 }
             }
         }
