@@ -26,6 +26,8 @@
             }
             else
             {
+                gm.Dialog.Write("An enemy approaches. Prepare to engage.");
+                gm.Dialog.Write("");
                 Event.Execute(gm);
             }
         }
