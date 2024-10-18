@@ -49,6 +49,7 @@ namespace Monobius
                     throw new NotImplementedException();
             }
 
+            IsDecrypted = true;
         }
 
         public void TreasureWeapon(GameManagerV2 gm, Weapon weapon)

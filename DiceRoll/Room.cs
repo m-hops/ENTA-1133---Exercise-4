@@ -20,7 +20,7 @@
 
         public void OnDecript(GameManagerV2 gm)
         {
-            if (Event == null)
+            if (Event == null || Event.IsDecrypted)
             {
                 gm.Dialog.FailDecryption();
             }

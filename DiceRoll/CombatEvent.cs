@@ -27,6 +27,7 @@ namespace Monobius
                 }
             }
 
+            IsDecrypted = true;
             if (gm.EnemyVessels.Count == 0)
             {
                 Win(gm);
