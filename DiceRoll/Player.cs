@@ -15,6 +15,7 @@ namespace Monobius
         public int CurrentY;
         public int AttackBonus = 0;
         public int DefenseBonus = 0;
+        public Vessel Vessel;
         public Inventory Inventory = new Inventory();
         Dialog Dialog = new Dialog();
 

@@ -38,7 +38,7 @@ namespace Monobius
         public override void Consume(GameManagerV2 gm)
         {
             int diceRoll = gm.Dice.Roll(RollLimit);
-            gm.PlayerVessel.Health += diceRoll;
+            gm.Player.Vessel.Health += diceRoll;
 
             gm.Dialog.Write("You gained back some health " + diceRoll);
         }

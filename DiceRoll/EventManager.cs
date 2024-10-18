@@ -53,7 +53,7 @@ namespace Monobius
         }
         public void Combat(GameManagerV2 gm)
         {
-            gm.PlayerVessel.ResetWeapons();
+            gm.Player.Vessel.ResetWeapons();
             Vessel enemyVessel = gm.Map.EnemyVessels[0];
             gm.Map.EnemyVessels.RemoveAt(0);
 
@@ -64,7 +64,7 @@ namespace Monobius
                 RoundCounter++;
                 if (RoundCounter % Vessel.kWeaponCount == 0)
                 {
-                    gm.PlayerVessel.ResetWeapons();
+                    gm.Player.Vessel.ResetWeapons();
                     enemyVessel.ResetWeapons();
                     gm.Dialog.Write("***WEAPONS HAVE BEEN RESET***");
                     gm.Dialog.Write("");
@@ -87,16 +87,16 @@ namespace Monobius
                 gm.Dialog.Write("----------------------");
 
                 //RUNS THROUGH ARRAY AND LIST TO RETURN STILL VALID WEAPONS OR QUEUE WEAPON RESET//
-                for (int i = 0; i < gm.PlayerVessel.weaponsReady.Count; i++)
+                for (int i = 0; i < gm.Player.Vessel.weaponsReady.Count; i++)
                 {
-                    int weaponIndex = gm.PlayerVessel.weaponsReady[i];
-                    gm.Dialog.Write(gm.PlayerVessel.Weapons[weaponIndex].Name);
+                    int weaponIndex = gm.Player.Vessel.weaponsReady[i];
+                    gm.Dialog.Write(gm.Player.Vessel.Weapons[weaponIndex].Name);
                 }
 
                 gm.Dialog.Write("----------------------");
                 gm.Dialog.SelectWeapon();
                 string playerVesselWeaponSelection = gm.InGameControlRead();
-                playerVesselWeaponIndex = gm.PlayerVessel.GetAvailableWeaponIndexByName(playerVesselWeaponSelection);
+                playerVesselWeaponIndex = gm.Player.Vessel.GetAvailableWeaponIndexByName(playerVesselWeaponSelection);
 
                 if (playerVesselWeaponIndex < 0)
                 {
@@ -107,8 +107,8 @@ namespace Monobius
             int enemyVesselWeaponIndex = enemyVessel.GetRandomAvailableWeaponIndex(gm.Dice);
 
             string enemyVesselCurrentWeapon = enemyVessel.Weapons[enemyVesselWeaponIndex].Name;
-            string playerVesselCurrentWeapon = gm.PlayerVessel.Weapons[playerVesselWeaponIndex].Name;
-            int playerVesselDice = gm.PlayerVessel.Weapons[playerVesselWeaponIndex].Attack;
+            string playerVesselCurrentWeapon = gm.Player.Vessel.Weapons[playerVesselWeaponIndex].Name;
+            int playerVesselDice = gm.Player.Vessel.Weapons[playerVesselWeaponIndex].Attack;
             int enemyVesselDice = enemyVessel.Weapons[playerVesselWeaponIndex].Attack;
             int playerVesselRollResult = gm.Dice.Roll(playerVesselDice);
             int enemyVesselRollResult = gm.Dice.Roll(enemyVesselDice);
@@ -136,9 +136,9 @@ namespace Monobius
 
                 if (dmg > 0)
                 {
-                    gm.PlayerVessel.Health -= dmg;
+                    gm.Player.Vessel.Health -= dmg;
                     gm.Dialog.Write("");
-                    gm.Dialog.Write("The " + gm.PlayerVessel.Name + " takes " + dmg + " damage.");
+                    gm.Dialog.Write("The " + gm.Player.Vessel.Name + " takes " + dmg + " damage.");
                 } else
                 {
                     gm.Dialog.Write("Your shields absord the weak attack.");
@@ -155,11 +155,11 @@ namespace Monobius
 
             }
 
-            gm.Dialog.RoundRecap(gm.PlayerVessel.Name, enemyVessel.Name, gm.PlayerVessel.Health, enemyVessel.Health);
+            gm.Dialog.RoundRecap(gm.Player.Vessel.Name, enemyVessel.Name, gm.Player.Vessel.Health, enemyVessel.Health);
 
-            if (gm.PlayerVessel.Health <= 0)
+            if (gm.Player.Vessel.Health <= 0)
             {
-                gm.Dialog.Write(gm.PlayerVessel.Name + " was killed by the enemy.");
+                gm.Dialog.Write(gm.Player.Vessel.Name + " was killed by the enemy.");
                 gm.IsPlayerAlive = false;
                 IsEventConcluded = true;
                 Lose(gm);
@@ -230,13 +230,13 @@ namespace Monobius
                         gm.Dialog.TreasureWeaponSelect1(gm);
 
                         string userInput = gm.Dialog.Read();
-                        int weaponIndex = gm.PlayerVessel.GetWeaponIndexByName(userInput);
+                        int weaponIndex = gm.Player.Vessel.GetWeaponIndexByName(userInput);
                         if (weaponIndex < 0)
                         {
                             isInvalidInput = true;
                         } else
                         {
-                            gm.PlayerVessel.SetWeapon(weapon, weaponIndex);
+                            gm.Player.Vessel.SetWeapon(weapon, weaponIndex);
                         }
                         break;
                     case "DESTROY":

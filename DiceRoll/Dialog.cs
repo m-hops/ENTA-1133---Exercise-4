@@ -121,10 +121,10 @@ namespace Monobius
         public void TreasureWeaponSelect1(GameManagerV2 gm)
         {
             Write("Which weapon would you like to replace?");
-            Write(gm.PlayerVessel.Weapons[0].Name);
-            Write(gm.PlayerVessel.Weapons[1].Name);
-            Write(gm.PlayerVessel.Weapons[2].Name);
-            Write(gm.PlayerVessel.Weapons[3].Name);
+            Write(gm.Player.Vessel.Weapons[0].Name);
+            Write(gm.Player.Vessel.Weapons[1].Name);
+            Write(gm.Player.Vessel.Weapons[2].Name);
+            Write(gm.Player.Vessel.Weapons[3].Name);
             Write("");
         }
         public void TreasureWeaponSelect2()  

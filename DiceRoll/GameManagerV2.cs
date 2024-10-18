@@ -13,7 +13,6 @@ namespace Monobius
         public Random Random = new Random();
         public Room CurrentPlayerRoom;
         public Map Map = new Map();
-        public Vessel PlayerVessel;
 
         public bool IsGameRunning = false;
         public bool IsPlayerAlive = false;
@@ -100,7 +99,7 @@ namespace Monobius
             //Dialog.Rules();
             Player.Setup();
             VesselSelect();
-            Dialog.GameStart(Player.Name, PlayerVessel.Name);
+            Dialog.GameStart(Player.Name, Player.Vessel.Name);
             Player.CurrentX = 1;
             Player.CurrentY = 1;
             Map.Setup(this,MapRows,MapCols,Dice);
@@ -146,13 +145,13 @@ namespace Monobius
                 {
 
                     case "BODY":
-                        PlayerVessel = CreateVesselFromPreset(0);
+                        Player.Vessel = CreateVesselFromPreset(0);
                         break;
                     case "MIND":
-                        PlayerVessel = CreateVesselFromPreset(1);
+                        Player.Vessel = CreateVesselFromPreset(1);
                         break;
                     case "HOLISTIC":
-                        PlayerVessel = CreateVesselFromPreset(2);
+                        Player.Vessel = CreateVesselFromPreset(2);
                         break;
                     default:
                         Dialog.SelectionError();
@@ -195,7 +194,7 @@ namespace Monobius
         {
             for (int i = 0; i < Vessel.kWeaponCount; i++)
             {
-                Dialog.Write(PlayerVessel.Weapons[i].Name);
+                Dialog.Write(Player.Vessel.Weapons[i].Name);
             }
 
             for (int i = 0; i < Player.Inventory.PassiveItems.Count; i++) 
