@@ -262,14 +262,9 @@ namespace Monobius
                 Dialog.Write(Player.Vessel.Weapons[i].Name);
             }
 
-            for (int i = 0; i < Player.Inventory.PassiveItems.Count; i++)
+            for (int i = 0; i < Player.Inventory.Items.Count; i++)
             {
-                Dialog.Write(Player.Inventory.PassiveItems[i].Name);
-            }
-
-            for (int i = 0; i < Player.Inventory.ConsumableItems.Count; i++)
-            {
-                Dialog.Write(Player.Inventory.ConsumableItems[i].Name);
+                Dialog.Write(Player.Inventory.Items[i].Name);
             }
         }
 

@@ -10,8 +10,8 @@ namespace Monobius
         public override void Execute(GameManagerV2 gm)
         {
             gm.Player.Vessel.ResetWeapons();
-            Vessel enemyVessel = gm.Map.EnemyVessels[0];
-            gm.Map.EnemyVessels.RemoveAt(0);
+            Vessel enemyVessel = gm.EnemyVessels[0];
+            gm.EnemyVessels.RemoveAt(0);
 
             while (!IsEventConcluded)
             {
@@ -27,7 +27,7 @@ namespace Monobius
                 }
             }
 
-            if (gm.Map.EnemyVessels.Count == 0)
+            if (gm.EnemyVessels.Count == 0)
             {
                 Win(gm);
             }
