@@ -19,15 +19,15 @@ namespace Monobius
             }
 
             List<Room> availableRooms = new List<Room>();
-            Room startingRoom = new Room(0, 0, 0, "Starting Room", new EventManager(EventManager.Events.Treasure));
-            availableRooms.Add(new Room(1, 0, 0, "Enemy Room", new EventManager(EventManager.Events.Combat)));
-            availableRooms.Add(new Room(2, 0, 0, "Enemy Room", new EventManager(EventManager.Events.Combat)));
-            availableRooms.Add(new Room(3, 0, 0, "Enemy Room", new EventManager(EventManager.Events.Combat)));
-            availableRooms.Add(new Room(4, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
-            availableRooms.Add(new Room(5, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
-            availableRooms.Add(new Room(6, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
-            availableRooms.Add(new Room(7, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
-            availableRooms.Add(new Room(8, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
+            Room startingRoom = new Room(0, 0, 0, "Starting Room", new TreasureEvent());
+            availableRooms.Add(new Room(1, 0, 0, "Enemy Room", new CombatEvent()));
+            availableRooms.Add(new Room(2, 0, 0, "Enemy Room", new CombatEvent()));
+            availableRooms.Add(new Room(3, 0, 0, "Enemy Room", new CombatEvent()));
+            availableRooms.Add(new Room(4, 0, 0, "Treasure Room", new TreasureEvent()));
+            availableRooms.Add(new Room(5, 0, 0, "Treasure Room", new TreasureEvent()));
+            availableRooms.Add(new Room(6, 0, 0, "Treasure Room", new TreasureEvent()));
+            availableRooms.Add(new Room(7, 0, 0, "Treasure Room", new TreasureEvent()));
+            availableRooms.Add(new Room(8, 0, 0, "Treasure Room", new TreasureEvent()));
 
             Rooms[startX, startY] = startingRoom;
 

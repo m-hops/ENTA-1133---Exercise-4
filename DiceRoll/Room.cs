@@ -1,7 +1,4 @@
-﻿using System;
-using System.Security.Permissions;
-
-namespace Monobius
+﻿namespace Monobius
 {
     //INDIVIDUAL ROOM CREATOR//
     public class Room
@@ -10,9 +7,9 @@ namespace Monobius
         public int PosX;
         public int PosY;
         public string Description;
-        public EventManager Event;
+        public Event Event;
 
-        public Room(int name, int posX, int posY, string description, EventManager roomEvent)
+        public Room(int name, int posX, int posY, string description, Event roomEvent)
         {
             Name = name;
             PosX = posX;

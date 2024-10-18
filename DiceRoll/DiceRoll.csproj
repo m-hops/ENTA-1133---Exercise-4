@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CombatEvent.cs" />
     <Compile Include="DieRoller.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="TreasureEvent.cs" />
     <Compile Include="Weapon.cs" />
     <Compile Include="Map.cs" />
-    <Compile Include="EventManager.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="Dialog.cs" />
     <Compile Include="Player.cs" />
