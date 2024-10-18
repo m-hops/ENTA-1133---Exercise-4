@@ -1,8 +1,8 @@
 ﻿namespace Monobius
 {
-
     public class Item
     {
+        //LIST ALL ITEM TYPES//
         public enum ItemType
         {
             Consumable,
@@ -22,10 +22,11 @@
         }
     }
 
+    //ITEM TYPES//
     public class ItemRepairHP: Item
     {
         int RollLimit;
-        public ItemRepairHP(string name, int rollLimit): base(ItemType.Consumable, "REPAIR KIT")
+        public ItemRepairHP(string name, int rollLimit): base(ItemType.Consumable, name)
         {
             RollLimit = rollLimit;
         }
@@ -41,7 +42,7 @@
     {
         int NegateAmount;
 
-        public ItemDamageNegator(string name, int negateAmount) : base(ItemType.Passive, "CEREBRUM")
+        public ItemDamageNegator(string name, int negateAmount) : base(ItemType.Passive, name)
         {
             NegateAmount = negateAmount;
         }
@@ -49,8 +50,22 @@
         {
             gm.Player.DefenseBonus += NegateAmount;
 
-            gm.Dialog.Write("Your defense bonus was increase by " + NegateAmount);
-            gm.Dialog.Write("Your defense bonus is now at " + gm.Player.DefenseBonus);
+            gm.Dialog.DamageNegator(NegateAmount, gm);
+        }
+    }
+    public class ItemDamageEnhance : Item
+    {
+        int AddAmount;
+
+        public ItemDamageEnhance(string name, int addAmount) : base(ItemType.Passive, name)
+        {
+            AddAmount = addAmount;
+        }
+        public override void Consume(GameManagerV2 gm)
+        {
+            gm.Player.AttackBonus += AddAmount;
+
+            gm.Dialog.DamageEnhance(AddAmount, gm);
         }
     }
 }

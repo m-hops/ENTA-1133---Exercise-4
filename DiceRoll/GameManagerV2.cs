@@ -56,9 +56,9 @@ namespace Monobius
             50,
             40,
             45,
-            1,
-            1,
-            1
+            20,
+            30,
+            40
         };
         public const int k_FirstEnemyVesselPresetIndex = 3;
 
@@ -66,7 +66,7 @@ namespace Monobius
         public void GameSetup()
         {
             Dialog.Welcome();
-            //Dialog.Rules();
+            Dialog.Rules();
             SetupPlayer();
             SetupPlayerVessel();
             SetupEnemyVessels();
@@ -77,13 +77,9 @@ namespace Monobius
 
             Console.Clear();
         }
-
         //FULL WEAPONS LIST AT GAME START//
         public void SetupTreasurePools()
         {
-            TreasurePoolWeapons.Add(new Weapon("HANDGUN", 25));
-            TreasurePoolWeapons.Add(new Weapon("DREAM", 30));
-            TreasurePoolWeapons.Add(new Weapon("DOWSING", 35));
             TreasurePoolWeapons.Add(new Weapon("XENOGLOSSY", 40));
             TreasurePoolWeapons.Add(new Weapon("WARRANT", 45));
             TreasurePoolWeapons.Add(new Weapon("INSECTOTHOPTER", 60));
@@ -91,22 +87,22 @@ namespace Monobius
             TreasurePoolWeapons.Add(new Weapon("PROPHECY", 80));
             TreasurePoolWeapons.Add(new Weapon("M91", 100));
 
-            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
-            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
-            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
-            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
-            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
-            TreasurePoolConsumable.Add(new ItemRepairHP("SOUL MENDING", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("COFFEE", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("COFFEE", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("COFFEE", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("COFFEE", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("COFFEE", 10));
+            TreasurePoolConsumable.Add(new ItemRepairHP("COFFEE", 10));
 
             TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
-            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
-            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
-            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
-            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
-            TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
+            TreasurePoolPassive.Add(new ItemDamageNegator("FRONTAL LOBE", 10));
+            TreasurePoolPassive.Add(new ItemDamageEnhance("LIMBIC LOBE", 5));
+            TreasurePoolPassive.Add(new ItemDamageEnhance("PARIETEL LOBE", 10));
+            TreasurePoolPassive.Add(new ItemDamageNegator("OCCIPITAL LOBE", 15));
+            TreasurePoolPassive.Add(new ItemDamageEnhance("THIRD EYE", 15));
 
         }
-
+        //SETS UP PLAYER INFO AND SPAWN POINT ON MAP//
         void SetupPlayer()
         {
             Player = new Player();
@@ -133,7 +129,6 @@ namespace Monobius
             }
 
         }
-
         //PLAYER VESSEL SELECTION//
         public void SetupPlayerVessel()
         {
@@ -163,7 +158,7 @@ namespace Monobius
             } while (isInvalidInput);
             Console.Clear();
         }
-
+        //ENEMY VESSEL SETUP//
         void SetupEnemyVessels()
         {
             //SETUP ALL ENEMY VESSELS//
@@ -173,7 +168,6 @@ namespace Monobius
                 EnemyVessels.Add(CreateVesselFromPreset(i));
             }
         }
-
         //CORE GAME LOOP//
         public void GameLoop()
         {
@@ -184,8 +178,7 @@ namespace Monobius
                 PlayerControl();
             }
         }
-
-        //PLAYER NAVIGATION CHECKS//
+        //PLAYER NAVIGATION AND DECRYPTION CHECKS//
         public void PlayerControl()
         {
             bool isInvalidInput;
@@ -202,7 +195,7 @@ namespace Monobius
                     case "N":
                         if (Player.CurrentY <= 0)
                         {
-                            Dialog.NavigationError();
+                            Dialog.NavigationError(this);
                         } else
                         {
                             Player.CurrentY--;
@@ -212,7 +205,7 @@ namespace Monobius
                     case "S":
                         if (Player.CurrentY >= MapHeight - 1)
                         {
-                            Dialog.NavigationError();
+                            Dialog.NavigationError(this);
                         }
                         else
                         {
@@ -223,7 +216,7 @@ namespace Monobius
                     case "E":
                         if (Player.CurrentX >= MapWidth - 1)
                         {
-                            Dialog.NavigationError();
+                            Dialog.NavigationError(this);
                         }
                         else
                         {
@@ -234,7 +227,7 @@ namespace Monobius
                     case "W":
                         if (Player.CurrentX <= 0)
                         {
-                            Dialog.NavigationError();
+                            Dialog.NavigationError(this);
                         }
                         else
                         {
@@ -248,20 +241,32 @@ namespace Monobius
                 }
             } while (isInvalidInput);
         }
-
+        //SHOWS CURRENT PLAYER INVENTORY WHEN PROMPTED//
         public void DisplayInventory()
         {
+            Dialog.Inventory0(this);
+
             for (int i = 0; i < Vessel.kWeaponCount; i++)
             {
                 Dialog.Write(Player.Vessel.Weapons[i].Name);
             }
 
+            Dialog.Inventory1();
+
             for (int i = 0; i < Player.Inventory.Items.Count; i++)
             {
-                Dialog.Write(Player.Inventory.Items[i].Name);
+                if (Player.Inventory.Items[i].Type == Item.ItemType.Consumable)
+                {
+                    Dialog.Write(Player.Inventory.Items[i].Name + "-(CONSUMABLE)");
+                } else
+                {
+                    Dialog.Write(Player.Inventory.Items[i].Name + "-(PASSIVE)");
+                }
             }
-        }
 
+            Dialog.Inventory2();
+        }
+        //LAUNCHES INVENTORY DIALOG WHEN PROMPTED//
         public string InGameControlRead()
         {
             while (true)
@@ -289,7 +294,7 @@ namespace Monobius
                 }
             }
         }
-
+        //GENERATE VESSELS FROM PRESETS//
         public Vessel CreateVesselFromPreset(int presetIndex)
         {
             Vessel vessel = new Vessel(kVesselPresetTypes[presetIndex], kVesselPresetHP[presetIndex]);

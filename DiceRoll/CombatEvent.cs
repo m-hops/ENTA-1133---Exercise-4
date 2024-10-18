@@ -1,18 +1,22 @@
 
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Monobius
 {
+    //COMBAT MANAGEMENT EVENT//
     public class CombatEvent : Event
     {
         public int RoundCounter = 0;
 
+        //RUNS MULTIPLE COMBAT ROUNDS UNTIL PLAYER OR ENEMY IS DEAD//
         public override void Execute(GameManagerV2 gm)
         {
             gm.Player.Vessel.ResetWeapons();
             Vessel enemyVessel = gm.EnemyVessels[0];
             gm.EnemyVessels.RemoveAt(0);
 
+            //RESETS WEAPON POOL EVERY 4 ROUNDS//
             while (!IsEventConcluded)
             {
                 CombatRound(gm, enemyVessel);
@@ -22,7 +26,7 @@ namespace Monobius
                 {
                     gm.Player.Vessel.ResetWeapons();
                     enemyVessel.ResetWeapons();
-                    gm.Dialog.Write("***WEAPONS HAVE BEEN RESET***");
+                    gm.Dialog.Write("***ASSETS HAVE BEEN RESET***");
                     gm.Dialog.Write("");
                 }
             }
@@ -33,7 +37,7 @@ namespace Monobius
                 Win(gm);
             }
         }
-
+        //BEHAVIOUR FOR A SINGLE ROUND OF COMBAT//
         public void CombatRound(GameManagerV2 gm, Vessel enemyVessel)
         {
 
@@ -105,7 +109,7 @@ namespace Monobius
 
 
             }
-            //IF BOTH SHIPS ROLL THE SAME//
+            //IF BOTH VESSELS ROLL THE SAME//
             else
             {
                 gm.Dialog.Write("");
@@ -131,17 +135,43 @@ namespace Monobius
                 Console.ReadLine();
             }
         }
-
+        //IF PLAYER DIES, COMMENCES LOSE LOOP//
         public void Lose(GameManagerV2 gm)
         {
             gm.IsGameRunning = false;
             Console.ReadLine();
+            PlayAgain(gm);
         }
-
+        //IF PLAYER WINS, COMMENCES WIN LOOP//
         public void Win(GameManagerV2 gm)
         {
             gm.IsGameRunning = false;
             Console.ReadLine();
+            PlayAgain(gm);
+        }
+        //RESTART OR EXIT PROGRAM AT THE END//
+        public void PlayAgain(GameManagerV2 gm)
+        {
+            bool isInvalidInput;
+            do
+            {
+                gm.Dialog.PlayAgain0();
+                isInvalidInput = false;
+                switch (gm.Dialog.Read())
+                {
+                    case "YES":
+                    case "Y":
+                        Console.Clear();
+                        gm.GameLoop();
+                        break;
+                    case "NO":
+                    case "N":
+                        gm.Dialog.PlayAgain1();
+                        break;
+                    default:
+                        break;
+                }
+            } while (isInvalidInput);
         }
     }
 }

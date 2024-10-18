@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Monobius
 {
-
+    //TREASURE ROOM HANDLER//
     public class TreasureEvent : Event
     {
         public override void Execute(GameManagerV2 gm)
@@ -17,6 +17,7 @@ namespace Monobius
             Item selectedItem;
             switch (roomSelection)
             {
+                //WEAPON TREASURE//
                 case 1:
                     {
                         int poolSize = weaponPool.Count;
@@ -26,6 +27,7 @@ namespace Monobius
                         TreasureWeapon(gm, weapon);
                     }
                     break;
+                //CONSUMABLE TREASURE//
                 case 2:
                     {
                         int poolSize = consumablePool.Count;
@@ -35,6 +37,7 @@ namespace Monobius
                         TreasureItem(gm, selectedItem);
                     }
                     break;
+                //PASSIVE TREASURE//
                 case 3:
                     {
                         int poolSize = passivePool.Count;
@@ -51,7 +54,7 @@ namespace Monobius
 
             IsDecrypted = true;
         }
-
+        //WHAT TO DO FOR WEAPON TREASURE CASES//
         public void TreasureWeapon(GameManagerV2 gm, Weapon weapon)
         {
             bool isInvalidInput;
@@ -69,6 +72,7 @@ namespace Monobius
                         int weaponIndex = gm.Player.Vessel.GetWeaponIndexByName(userInput);
                         if (weaponIndex < 0)
                         {
+                            gm.Dialog.SelectionError();
                             isInvalidInput = true;
                         }
                         else
@@ -90,6 +94,7 @@ namespace Monobius
 
 
         }
+        //WHAT TO DO FOR CONSUMABLE & PASSIVE CASES//
         public void TreasureItem(GameManagerV2 gm, Item item)
         {
             gm.Dialog.ItemSelect(item);

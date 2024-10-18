@@ -1,5 +1,6 @@
 ﻿namespace Monobius
 {
+    //TOP LEVEL CLASS FOR ALL EVENTS THAT CAN OCCUR IN A GEOINT//
     public abstract class Event
     {
         public bool IsDecrypted = false;
