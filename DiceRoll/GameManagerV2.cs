@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
 
 namespace Monobius
 {
@@ -16,8 +15,8 @@ namespace Monobius
 
         public bool IsGameRunning = false;
         public bool IsPlayerAlive = false;
-        public int MapRows = 3;
-        public int MapCols = 3;
+        public int MapWidth = 3;
+        public int MapHeight = 3;
         public string PlayerVesselCurrentWeapon;
         public const int k_FirstEnemyVesselPresetIndex = 3;
 
@@ -102,7 +101,7 @@ namespace Monobius
             Dialog.GameStart(Player.Name, Player.Vessel.Name);
             Player.CurrentX = 1;
             Player.CurrentY = 1;
-            Map.Setup(this,MapRows,MapCols,Dice);
+            Map.Setup(this,MapWidth,MapHeight,Dice, 1, 1);
             GenerateTreasurePools();
             CurrentPlayerRoom = Map.Rooms[Player.CurrentX, Player.CurrentY];
             IsGameRunning = true;
@@ -238,7 +237,7 @@ namespace Monobius
                         break;
                     case "SOUTH":
                     case "S":
-                        if (Player.CurrentY >= MapCols - 1)
+                        if (Player.CurrentY >= MapHeight - 1)
                         {
                             Dialog.NavigationError();
                         }
@@ -249,7 +248,7 @@ namespace Monobius
                         break;
                     case "EAST":
                     case "E":
-                        if (Player.CurrentX >= MapRows - 1)
+                        if (Player.CurrentX >= MapWidth - 1)
                         {
                             Dialog.NavigationError();
                         }

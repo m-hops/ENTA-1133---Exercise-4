@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 
 namespace Monobius
 {
@@ -9,10 +7,9 @@ namespace Monobius
         public int RoomName = 0;
         public Room[,] Rooms;
         public List<Vessel> EnemyVessels;
-
-        public void Setup(GameManagerV2 gm, int rows, int cols, DieRoller dice)
+        public void Setup(GameManagerV2 gm, int width, int height, DieRoller dice, int startX, int startY)
         {
-            Rooms = new Room[rows, cols];
+            Rooms = new Room[width, height];
 
             //SETUP ALL ENEMY VESSELS//
             EnemyVessels = new List<Vessel>();
@@ -32,22 +29,22 @@ namespace Monobius
             availableRooms.Add(new Room(7, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
             availableRooms.Add(new Room(8, 0, 0, "Treasure Room", new EventManager(EventManager.Events.Treasure)));
 
-            Rooms[1, 1] = startingRoom;
+            Rooms[startX, startY] = startingRoom;
 
-            for (int currentRow = 0; currentRow < rows; currentRow++)
+            for (int x = 0; x < width; x++)
             {
-                for (int currentCol = 0; currentCol < cols; currentCol++)
+                for (int y = 0; y < height; y++)
                 {
-                    Room r = Rooms[currentRow, currentCol];
+                    Room r = Rooms[x, y];
                     if (r == null)
                     {
                         int roomIndex = gm.Dice.Roll(availableRooms.Count) - 1;
                         r = availableRooms[roomIndex];
                         availableRooms.RemoveAt(roomIndex);
                     }
-                    r.PosX = currentRow;
-                    r.PosY = currentCol;
-                    Rooms[currentRow, currentCol] = r;
+                    r.PosX = x;
+                    r.PosY = y;
+                    Rooms[x, y] = r;
                 }
             }
         }
