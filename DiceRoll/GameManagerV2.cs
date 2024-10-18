@@ -9,16 +9,14 @@ namespace Monobius
         public DieRoller Dice = new DieRoller();
         public Dialog Dialog = new Dialog();
         public Player Player = new Player();
-        public Random Random = new Random();
-        public Room CurrentPlayerRoom;
         public Map Map = new Map();
+        public int MapWidth = 3;
+        public int MapHeight = 3;
 
         public bool IsGameRunning = false;
         public bool IsPlayerAlive = false;
-        public int MapWidth = 3;
-        public int MapHeight = 3;
-        public string PlayerVesselCurrentWeapon;
-        public const int k_FirstEnemyVesselPresetIndex = 3;
+        public Room CurrentPlayerRoom;
+
 
         //PRESET SHIP POOLS//
         //FIRST 3 ARE PLAYER CHOICE & THE REST ARE ENEMY NPCS//
@@ -58,6 +56,7 @@ namespace Monobius
             1,
             1
         };
+        public const int k_FirstEnemyVesselPresetIndex = 3;
 
         public List<Weapon> TreasurePoolWeapons = new List<Weapon>();
         public List<Item> TreasurePoolConsumable = new List<Item>();
