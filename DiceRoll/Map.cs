@@ -7,7 +7,7 @@ namespace Monobius
         public int RoomName = 0;
         public Room[,] Rooms;
         public List<Vessel> EnemyVessels;
-        public void Setup(GameManagerV2 gm, int width, int height, DieRoller dice, int startX, int startY)
+        public Map(GameManagerV2 gm, int width, int height, DieRoller dice, int startX, int startY)
         {
             Rooms = new Room[width, height];
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Monobius
 {
@@ -8,8 +9,8 @@ namespace Monobius
         //CLASS INSTANCE VARIABLES//
         public DieRoller Dice = new DieRoller();
         public Dialog Dialog = new Dialog();
-        public Player Player = new Player();
-        public Map Map = new Map();
+        public Player Player;
+        public Map Map;
         public int MapWidth = 3;
         public int MapHeight = 3;
 
@@ -90,23 +91,50 @@ namespace Monobius
             TreasurePoolPassive.Add(new ItemDamageNegator("CEREBRUM", 5));
 
         }
+
         //ONE TIME SETUPS//
         public void GameSetup()
         {
             Dialog.Welcome();
             //Dialog.Rules();
-            Player.Setup();
+            SetupPlayer();
             VesselSelect();
             Dialog.GameStart(Player.Name, Player.Vessel.Name);
             Player.CurrentX = 1;
             Player.CurrentY = 1;
-            Map.Setup(this,MapWidth,MapHeight,Dice, 1, 1);
+            Map = new Map(this,MapWidth,MapHeight,Dice, 1, 1);
             GenerateTreasurePools();
             CurrentPlayerRoom = Map.Rooms[Player.CurrentX, Player.CurrentY];
             IsGameRunning = true;
 
             Console.Clear();
         }
+
+        void SetupPlayer()
+        {
+            Player = new Player();
+
+            //READ PLAYER NAME//
+            bool isInvalidInput = true;
+            while (isInvalidInput)
+            {
+                Dialog.IDPlayer();
+                string Name = Console.ReadLine();
+                switch (Name)
+                {
+                    case "":
+                    case " ":
+                        Dialog.SelectionError();
+                        break;
+                    default:
+                        Player.Name = Name;
+                        isInvalidInput = false;
+                        break;
+                }
+            }
+
+        }
+
         //CORE GAME LOOP//
         public void GameLoop()
         {
@@ -119,6 +147,7 @@ namespace Monobius
                 PlayerControl();
             }
         }
+
         public Vessel CreateVesselFromPreset(int presetIndex)
         {
             Vessel vessel = new Vessel(kVesselPresetTypes[presetIndex], kVesselPresetHP[presetIndex]);
@@ -131,6 +160,7 @@ namespace Monobius
 
             return vessel;
         }
+
         //PLAYER VESSEL SELECTION//
         public void VesselSelect()
         {
