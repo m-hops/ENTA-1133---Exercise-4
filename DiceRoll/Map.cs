@@ -6,17 +6,9 @@ namespace Monobius
     {
         public int RoomName = 0;
         public Room[,] Rooms;
-        public List<Vessel> EnemyVessels;
         public Map(GameManagerV2 gm, int width, int height, DieRoller dice, int startX, int startY)
         {
             Rooms = new Room[width, height];
-
-            //SETUP ALL ENEMY VESSELS//
-            EnemyVessels = new List<Vessel>();
-            for (int i = GameManagerV2.k_FirstEnemyVesselPresetIndex; i < gm.kVesselPresetTypes.Length; i++) 
-            {
-                EnemyVessels.Add(gm.CreateVesselFromPreset(i));
-            }
 
             List<Room> availableRooms = new List<Room>();
             Room startingRoom = new Room(0, 0, 0, "Starting Room", new TreasureEvent());

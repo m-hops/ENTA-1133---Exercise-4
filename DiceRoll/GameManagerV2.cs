@@ -12,10 +12,14 @@ namespace Monobius
         public Map Map;
         public int MapWidth = 3;
         public int MapHeight = 3;
+        public List<Vessel> EnemyVessels;
+        public List<Weapon> TreasurePoolWeapons = new List<Weapon>();
+        public List<Item> TreasurePoolConsumable = new List<Item>();
+        public List<Item> TreasurePoolPassive = new List<Item>();
 
         public bool IsGameRunning = false;
         public bool IsPlayerAlive = false;
-        public Room CurrentPlayerRoom;
+        public Room CurrentPlayerRoom => Map.Rooms[Player.CurrentX, Player.CurrentY];
 
 
         //PRESET SHIP POOLS//
@@ -58,12 +62,24 @@ namespace Monobius
         };
         public const int k_FirstEnemyVesselPresetIndex = 3;
 
-        public List<Weapon> TreasurePoolWeapons = new List<Weapon>();
-        public List<Item> TreasurePoolConsumable = new List<Item>();
-        public List<Item> TreasurePoolPassive = new List<Item>();
+        //ONE TIME SETUPS//
+        public void GameSetup()
+        {
+            Dialog.Welcome();
+            //Dialog.Rules();
+            SetupPlayer();
+            SetupPlayerVessel();
+            SetupEnemyVessels();
+            Map = new Map(this, MapWidth, MapHeight, Dice, 1, 1);
+            SetupTreasurePools();
+            IsGameRunning = true;
+            Dialog.GameStart(Player.Name, Player.Vessel.Name);
+
+            Console.Clear();
+        }
 
         //FULL WEAPONS LIST AT GAME START//
-        public void GenerateTreasurePools()
+        public void SetupTreasurePools()
         {
             TreasurePoolWeapons.Add(new Weapon("HANDGUN", 25));
             TreasurePoolWeapons.Add(new Weapon("DREAM", 30));
@@ -91,27 +107,11 @@ namespace Monobius
 
         }
 
-        //ONE TIME SETUPS//
-        public void GameSetup()
-        {
-            Dialog.Welcome();
-            //Dialog.Rules();
-            SetupPlayer();
-            VesselSelect();
-            Dialog.GameStart(Player.Name, Player.Vessel.Name);
-            Player.CurrentX = 1;
-            Player.CurrentY = 1;
-            Map = new Map(this,MapWidth,MapHeight,Dice, 1, 1);
-            GenerateTreasurePools();
-            CurrentPlayerRoom = Map.Rooms[Player.CurrentX, Player.CurrentY];
-            IsGameRunning = true;
-
-            Console.Clear();
-        }
-
         void SetupPlayer()
         {
             Player = new Player();
+            Player.CurrentX = 1;
+            Player.CurrentY = 1;
 
             //READ PLAYER NAME//
             bool isInvalidInput = true;
@@ -134,43 +134,17 @@ namespace Monobius
 
         }
 
-        //CORE GAME LOOP//
-        public void GameLoop()
-        {
-            GameSetup();
-
-            while (IsGameRunning)
-            {
-
-                Dialog.IntroduceRoom(CurrentPlayerRoom);
-                PlayerControl();
-            }
-        }
-
-        public Vessel CreateVesselFromPreset(int presetIndex)
-        {
-            Vessel vessel = new Vessel(kVesselPresetTypes[presetIndex], kVesselPresetHP[presetIndex]);
-
-            for (int j = 0; j < Vessel.kWeaponCount; j++)
-            {
-                Weapon weapon = new Weapon(kVesselPresetWeaponNames[presetIndex][j], kVesselPresetWeaponAttacks[presetIndex][j]);
-                vessel.SetWeapon(weapon, j);
-            }
-
-            return vessel;
-        }
-
         //PLAYER VESSEL SELECTION//
-        public void VesselSelect()
+        public void SetupPlayerVessel()
         {
             Dialog.IDVesselType(Player.Name);
+
             bool isInvalidInput;
             do
             {
                 isInvalidInput = false;
                 switch (Dialog.Read())
                 {
-
                     case "BODY":
                         Player.Vessel = CreateVesselFromPreset(0);
                         break;
@@ -184,56 +158,33 @@ namespace Monobius
                         Dialog.SelectionError();
                         isInvalidInput = true;
                         break;
-
                 }
                 //CHECKS FOR INVALID INPUTS//
             } while (isInvalidInput);
-
             Console.Clear();
         }
-        public string InGameControlRead()
-        {
-            while (true) 
-            {
-                string userInput = Dialog.Read();
-                switch (userInput)
-                {
-                    case "INVENTORY":
-                    case "I":
-                        DisplayInventory();
-                        break;
-                    default:
-                        Item item = Player.Inventory.GetConsumableItemByName(userInput);
 
-                        if (item != null) 
-                        {
-                            item.Consume(this);
-                            Player.Inventory.RemoveItem(item);
-                        } else
-                        {
-                            return userInput;
-                        }
-                        break;
-                }
+        void SetupEnemyVessels()
+        {
+            //SETUP ALL ENEMY VESSELS//
+            EnemyVessels = new List<Vessel>();
+            for (int i = k_FirstEnemyVesselPresetIndex; i < kVesselPresetTypes.Length; i++)
+            {
+                EnemyVessels.Add(CreateVesselFromPreset(i));
             }
         }
-        public void DisplayInventory()
+
+        //CORE GAME LOOP//
+        public void GameLoop()
         {
-            for (int i = 0; i < Vessel.kWeaponCount; i++)
+            GameSetup();
+            while (IsGameRunning)
             {
-                Dialog.Write(Player.Vessel.Weapons[i].Name);
-            }
-
-            for (int i = 0; i < Player.Inventory.PassiveItems.Count; i++) 
-            {
-                Dialog.Write(Player.Inventory.PassiveItems[i].Name);
-            }
-
-            for (int i = 0; i < Player.Inventory.ConsumableItems.Count; i++)
-            {
-                Dialog.Write(Player.Inventory.ConsumableItems[i].Name);
+                Dialog.IntroduceRoom(CurrentPlayerRoom);
+                PlayerControl();
             }
         }
+
         //PLAYER NAVIGATION CHECKS//
         public void PlayerControl()
         {
@@ -301,11 +252,64 @@ namespace Monobius
                         isInvalidInput = true;
                         return;
                 }
-                CurrentPlayerRoom = Map.Rooms[Player.CurrentX, Player.CurrentY];
-
             } while (isInvalidInput);
-            
-            Dialog.Write(Player.CurrentY + " and " + Player.CurrentX);
+        }
+
+        public void DisplayInventory()
+        {
+            for (int i = 0; i < Vessel.kWeaponCount; i++)
+            {
+                Dialog.Write(Player.Vessel.Weapons[i].Name);
+            }
+
+            for (int i = 0; i < Player.Inventory.PassiveItems.Count; i++)
+            {
+                Dialog.Write(Player.Inventory.PassiveItems[i].Name);
+            }
+
+            for (int i = 0; i < Player.Inventory.ConsumableItems.Count; i++)
+            {
+                Dialog.Write(Player.Inventory.ConsumableItems[i].Name);
+            }
+        }
+
+        public string InGameControlRead()
+        {
+            while (true)
+            {
+                string userInput = Dialog.Read();
+                switch (userInput)
+                {
+                    case "INVENTORY":
+                    case "I":
+                        DisplayInventory();
+                        break;
+                    default:
+                        Item item = Player.Inventory.GetConsumableItemByName(userInput);
+
+                        if (item != null)
+                        {
+                            item.Consume(this);
+                            Player.Inventory.RemoveItem(item);
+                        }
+                        else
+                        {
+                            return userInput;
+                        }
+                        break;
+                }
+            }
+        }
+
+        public Vessel CreateVesselFromPreset(int presetIndex)
+        {
+            Vessel vessel = new Vessel(kVesselPresetTypes[presetIndex], kVesselPresetHP[presetIndex]);
+            for (int j = 0; j < Vessel.kWeaponCount; j++)
+            {
+                Weapon weapon = new Weapon(kVesselPresetWeaponNames[presetIndex][j], kVesselPresetWeaponAttacks[presetIndex][j]);
+                vessel.SetWeapon(weapon, j);
+            }
+            return vessel;
         }
     }
 }
